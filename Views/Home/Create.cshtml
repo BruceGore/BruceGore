@@ -1,0 +1,128 @@
+@model AudioLectures
+
+@{
+    ViewBag.Title = "Create Audio Lecture Entry";    
+}
+
+<form asp-controller="home" asp-action="Create" method="post" class="mt-12">
+
+
+    <div class="form-group row">
+        <label asp-for="ID" class="col-md-2 col-form-label">ID</label>
+        <div class="col-md-10">
+            <input style="width:100px" asp-for="ID" />
+            <span asp-validation-for="ID" class="text-danger"></span>
+        </div>
+    </div>
+
+<!--
+
+    <div class="form-group row">
+        <label asp-for="Class" class="col-md-2 col-form-label"></label>
+        <div class="col-md-10">
+            <select asp-for="Class" asp-items="Html.GetEnumSelectList<Class>()">
+                <option value="">Please Select</option>                
+            </select>
+            <span asp-validation-for="Class" class="text-danger"></span>
+        </div>
+    </div>
+
+-->
+
+    <div class="form-group row">
+        <label asp-for="Class" class="col-md-2 col-form-label">Class</label>
+        <div class="col-md-10" >
+            <input style="width:300px" asp-for="Class" />
+            <span asp-validation-for="Class" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label asp-for="Topic" class="col-md-2 col-form-label">Topic</label>
+        <div class="col-md-10" >
+            <input style="width:300px" asp-for="Topic" />
+            <span asp-validation-for="Topic" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label asp-for="Title" class="col-md-2 col-form-label">Title</label>
+        <div class="col-md-10">
+            <input style="width:300px" asp-for="Title" />
+        </div>
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+   
+    <div class="form-group row">
+        <label asp-for="Book" class="col-md-2 col-form-label">Book</label>
+        <div class="col-md-10">
+            <input style="width:200px" asp-for="Book" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label asp-for="Chapter" class="col-md-2 col-form-label">Chapter</label>
+        <div class="col-md-10">
+            <input style="width:50px" asp-for="Chapter" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label asp-for="Verse" class="col-md-2 col-form-label">Verse</label>
+        <div class="col-md-10">
+            <input style="width:50px" asp-for="Verse" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label asp-for="Date" class="col-md-2 col-form-label">Date</label>
+        <div class="col-md-10">
+            <input asp-for="Date" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label asp-for="Format" class="col-md-2 col-form-label">Format</label>
+        <div class="col-md-10">
+            <input style="width:50px" asp-for="Format" />
+        </div>
+    </div>
+    
+    <div class="form-group row">
+        <label asp-for="Comment" class="col-md-2 col-form-label">Comment</label>
+        <div class="col-md-10">
+            <textarea style="width:500px" rows="3" asp-for="Comment"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label asp-for="Hyperlink" class="col-md-2 col-form-label">Hyperlink</label>
+        <div class="col-md-10">
+            <input style="width:400px" asp-for="Hyperlink" />
+        </div>
+    </div>
+
+        <div class="form-group row">
+        <label asp-for="LogicalOrder" class="col-md-2 col-form-label">Logical Order</label>
+        <div class="col-md-10">
+            <input style="width:100px" asp-for="LogicalOrder" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label asp-for="VideoLink" class="col-md-2 col-form-label">Video Link</label>
+        <div class="col-md-10">
+            <input style="width:400px" asp-for="VideoLink" />
+        </div>
+    </div>
+
+
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="form-group row">
+        <div class="col-md-10">
+            <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,337 @@
+@inject SignInManager<ApplicationUser> signInManager;
+
+@{
+    ViewData["Title"] = "Online Courses";
+}
+<h1>@ViewData["Title"]</h1>
+
+<div class="container">
+    <div ng-controller="drop" data-ng-init="init_courses('@User.Identity.Name')">
+        <div class="row">
+            <div class="col-sm-4 col-md-4 col-lg-4">
+                <img src="~/images/BruceKandy7.jpg" class="img-fluid" />
+            </div>
+
+            <div class="col-sm-8 col-md-8 col-lg-8">                
+                <h3>You will find here a collection of Bruce's course offerings that he has
+                    taught over the years. The lectures are available at no charge, and 
+                    may be accessed by clicking the dropdown button on the left below.
+                </h3>
+
+                @if (!signInManager.IsSignedIn(User))
+                {
+                    <h3 class="mt-4">
+                    A few of the courses are offered as interactive classes appropriate for homeschoolers 
+                    or those who prefer a more structured approach. These courses include 
+                    collateral reading, quizzes, and essays, and direct interaction with Bruce.
+                    To learn more about any of these offerings, please register (at no cost or obligation) or 
+                    login as indicated in the upper right of this screen. 
+                    </h3>
+                    <h3 class="mt-4">
+                    If you are a teacher (private school or homeschool) and are interested in registering
+                    as a teacher who will assume responsibility for students taking this course under 
+                    your supervision, please click the 'Teacher' button below for more information.
+                    </h3>
+
+                    <input ng-click="coursebtn('98')" style="width: 100px" 
+                        class="btn btn-primary mt-4 ml-2 font-weight-bold"
+                        value="Teacher">
+                }
+
+                @if (signInManager.IsSignedIn(User))
+                {
+                    <h3 class="mt-4">
+                        Below you will find the interactive courses that are currently available 
+                        from the Bruce W. Gore Online School of Christian Studies. These courses
+                        are intended for anyone interested in a more structured approach to
+                        the lecture material or for upper division homeschoolers. These courses
+                        include collateral readings, quizzes, essays, and direct interaction with Bruce. 
+                        For additional information on each course, please select from the choices below.
+                    </h3>
+
+                    <h3 ng-show="teach" class="mt-4">
+                        Because you have registered as a teacher, you will be provided the opportunity
+                        after you register for a course to add up to ten students who will be 
+                        under your supervision. 
+                    </h3>
+
+                    <div class="mt-4">
+                        <input ng-click="coursebtn('01')" style="width: 300px" 
+                            class="btn btn-success mt-4 ml-2 font-weight-bold"
+                            ng-show="crs01" value="Historical Context of the Bible">
+                        <input ng-click="coursebtn('02')" style="width: 300px" 
+                            class="btn btn-success mt-4 ml-2 font-weight-bold"
+                            ng-show="crs02" value="The History of the Christian Movement">
+                        <input ng-click="coursebtn('03')" style="width: 300px" 
+                            class="btn btn-success mt-4 ml-2 font-weight-bold"
+                            ng-show="crs03" value="Philosophy and History of Christian Thought (part 1)">
+                        <input ng-click="coursebtn('04')" style="width: 300px" 
+                            class="btn btn-success mt-4 ml-2 font-weight-bold"
+                            ng-show="crs04" value="Philosophy and History of Christian Thought (part 4)">
+                        <input ng-click="coursebtn('05')" style="width: 300px" 
+                            class="btn btn-success mt-4 ml-2 font-weight-bold"
+                            ng-show="crs05" value="Introduction to New Testament Greek">
+                        <input ng-click="coursebtn('06')" style="width: 300px" 
+                            class="btn btn-success mt-4 ml-2 font-weight-bold"
+                            ng-show="crs06" value="Presbyterians and the American Revolution">
+                        <input ng-click="coursebtn('99')" style="width: 100px" 
+                            class="btn btn-success mt-4 ml-2 font-weight-bold"
+                            ng-show="crs99" value="Cancel">
+                    </div>
+                }
+
+                @if (signInManager.IsSignedIn(User) && User.IsInRole("Student"))
+                {
+                    <div>
+                        <div class="mt-4">
+                            <input ng-click="coursebtn('01')" style="width: 100px" class="btn btn-primary mt-4"
+                            value="Philosophy 1">
+                            <input ng-click="coursebtn('02')" style="width: 100px" class="btn btn-primary mt-4 ml-2"
+                            value="Philosophy 2">
+                            <input ng-click="coursebtn('03')" style="width: 100px" class="btn btn-primary mt-4 ml-2"
+                            value="Bible Context">
+                        </div>
+                    </div>
+                }
+
+                <div ng-show = "subscribed" class="mt-4">
+                    <h3>
+                        Here are the courses for which you are currently registered. 
+                        To access the course, please click the button below.
+
+                    </h3>
+
+                    <a asp-controller="Home" asp-action="launchCourse" class="btn btn-primary mt-4"
+                    ng-show="context" asp-route-usr="@User.Identity.Name" asp-route-id="01">Context</a>
+
+                    <a asp-controller="Home" asp-action="launchCourse" class="btn btn-primary mt-4"
+                    ng-show="greek" asp-route-usr="@User.Identity.Name" asp-route-id="02">Greek</a>
+
+
+
+                    <input ng-click="courseLaunch('01', '@User.Identity.Name')" style="width: 100px" class="btn btn-primary mt-4"
+                    ng-show="con" value="Bible Context">
+
+                    <input ng-click="courseLaunch('02')" style="width: 100px" class="btn btn-primary mt-4 ml-2"
+                    ng-show="Philosophy" value="Philosophy 1">
+                    
+                    <input ng-click="courseLaunch('03')" style="width: 100px" class="btn btn-primary mt-4 ml-2"
+                    ng-show="Philosophy2" value="Philosophy 2">
+
+                    
+                </div>
+
+
+
+
+
+                <div>
+                    <h3 class="mt-4" ng-show = "desc01">
+                        Thanks for taking a look at this interactive course, Historical Context of the 
+                        Bible, taught by Bruce Gore. As the name implies, this course will provide a 
+                        thorough introduction to the ancient historical and cultural setting of the 
+                        Old and New Testaments. The course relies on the text authored by Bruce Gore, 
+                        Historical and Chronological Context of the Bible, available from Amazon and 
+                        other on-line booksellers for about $25 to $30. The course also relies on 
+                        engaging videos, quizzes, and short writing assignments in a self-paced journey 
+                        through the twelve chapters of Gore's text. The cost for the course is $40 US, 
+                        which includes direct review and interaction with Bruce, and a copy of the textbook 
+                        in pdf format. If you have registered as a teacher who would like to offer this 
+                        material for up to ten of your own students, and assume responsibility for 
+                        instructional oversight, the opportunity to register your students will be
+                        provided after you register. All payments are handled securely through PayPal. 
+                        To register for the course, click 'register' below. If you have further 
+                        questions, you may e-mail Bruce directly at bruce@brucegore.com. Thanks for 
+                        your interest. Hope to see you in Context of the Bible!
+                    </h3>                    
+
+                        <input ng-click="reg('context', '@User.Identity.Name')" style="width: 300px"
+                            class="btn btn-success mt-4 ml-2 font-weight-bold"
+                            ng-show="desc01" value="Register for Context of the Bible">
+
+
+                    <h3 ng-show="desc01pp" class="mt-4">
+                        The button below will take you to the secure PayPal site. Be sure to provide
+                        the same email address at PayPal as you have used to register at this site. 
+                        Otherwise, your registration payment will not post to our server correctly! 
+                        After you register, you will receive an email giving instructions as to how 
+                        to proceed. 
+                    </h3>                    
+
+                    <div id="Context" class="btnPayPal mt-4" ng-show="desc01pp">
+                        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                        <input type="hidden" name="cmd" value="_s-xclick">
+                        <input type="hidden" name="hosted_button_id" value="2MMHC3Y25SNH8">
+                        <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_paynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                        <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+                        </form>                        
+                    </div>
+
+
+
+                    
+                    <h3 class="mt-4" ng-show="desc02">
+                        Thanks for taking a look at this interactive course, History of the Christian
+                        Movement, taught by Bruce Gore. As the name implies, this course will provide an 
+                        introduction to the history of the church, covering its major personalities  
+                        and the challenges it has faced over the centuries. The course relies on the 
+                        text by Bruce Shelley, Church History in Plain Language, available from Amazon and 
+                        other on-line booksellers for a reasonable price. The course also incorporates  
+                        engaging videos, quizzes, and short writing assignments in a self-paced journey 
+                        through history since the first century. The cost for the course is $40 US, 
+                        which includes direct review and interaction with Bruce. If you are a teacher 
+                        who would like to offer this material to two or more of your own students, 
+                        and assume responsibility for instructional oversight, price discounts are available. 
+                        Please e-mail Bruce at bruce@brucegore.com for more information. All payments 
+                        are handled securely through PayPal. To register for the course, click 'register' 
+                        below. If you have further questions, you may e-mail Bruce directly at 
+                        bruce@brucegore.com. Thanks for your interest. Hope to see you in History 
+                        of the Christian Movement!
+                    </h3 >                    
+                        <input ng-click="reg('02')" style="width: 300px" 
+                            class="btn btn-success mt-4 ml-2 font-weight-bold"
+                            ng-show="desc02" value="Register for History of the Christian Movement">
+                            
+                    <h3 class="mt-4" ng-show="desc03">
+                        Thanks for taking a look at this interactive course, Philosophy and History of 
+                        Christian Thought, taught by Bruce Gore. As the name implies, this course will provide 
+                        a survey of the history of philosophy, with an emphasis on the development of 
+                        Christian understanding along the way. The course relies on engaging videos of 
+                        lectures to a real class of high school seniors, along with quizzes, collateral 
+                        readings, and short writing assignments in a self-paced journey through the 
+                        history of philosophical thought. The course consists of 90 lessons, divided 
+                        into two parts, each part priced at $40 US, which includes direct review and 
+                        interaction with Bruce. If you are a teacher who would like to offer this 
+                        material to two or more of your own students, and assume responsibility for 
+                        instructional oversight, your registration payment includes additional 
+                        registration of up to 10 students. For detailed instruction on how to proceed, 
+                        please download the "Teacher Manual" from the link on the "Online Courses" tab. 
+                        All payments are handled securely through PayPal. To register for the course, 
+                        click 'register' below. If you have further questions, you may e-mail Bruce 
+                        directly at bruce@brucegore.com. Thanks for your interest. Hope to see you in 
+                        Philosophy and History of Christian Thought!
+                    </h3>
+                        <input ng-click="reg('03')" style="width: 300px" 
+                            class="btn btn-success mt-4 ml-2 font-weight-bold"
+                            ng-show="desc03" value="Register for Philosophy (part 1)">
+
+                    <h3 class="mt-4" ng-show="desc04">
+                        This course is part two of the Philosophy and History of Christian Thought 
+                        series. It is currently under construction, and should be ready for registration 
+                        in the near future. Please check back later, or you can contact Bruce at 
+                        bruce@brucegore.com for more information. Thanks for your interest!
+                    </h3>
+                        <input ng-click="reg('04')" style="width: 300px" 
+                            class="btn btn-success mt-4 ml-2 font-weight-bold"
+                            ng-show="desc04" value="Register for Philosophy (part 2)">
+
+                    <h3 class="mt-4" ng-show="desc05">
+
+                        Thanks for taking a look at this interactive course, New Testament Greek for 
+                        Beginners, taught by Bruce Gore. As the name implies, the course is intended 
+                        for absolute beginners to the Greek language, but by the time you are done, 
+                        you will have a very solid foundation in the original language of the New 
+                        Testament. The course uses the classic Greek textbook by J. Gresham Machen 
+                        (readily available from on-line booksellers for about $10 - $15), along 
+                        with videos, answer keys, interactive practice exercises, and quizzes, 
+                        in a self-paced journey through the thirty-three chapters of Machen's fine 
+                        little text. If you would like to see a brief video by Bruce explaining 
+                        how the course works (which is highly recommended!), click the button 
+                        labeled 'video' below. This course is organized in four units. Each unit 
+                        costs $20 US. Payment is handled securely through PayPal. To register 
+                        for the course, click 'register,' below. If you have further questions, 
+                        you may e-mail Bruce directly at bruce@brucegore.com. Thanks for your 
+                        interest. Hope to see you in Greek!
+                    </h3>
+                        <input ng-click="reg('05')" style="width: 300px" 
+                            class="btn btn-success mt-4 ml-2 font-weight-bold"
+                            ng-show="desc05" value="Register for New Testament Greek">
+
+
+                    <h3 ng-show="teacher" class="mt-4">
+                        The courses offered here may be taught in a homeschool or private
+                        school environment, under the supervision of a user registered as
+                        a teacher. When you register (upper right of this screen), click the 
+                        checkbox for 'teacher.' Then when you enroll for a course, you will be 
+                        provided the option of adding up to 10 students at no additional 
+                        charge. You as teacher will be fully responsible for overseeing 
+                        your students.  
+                    </h3>
+
+
+
+                    <h2 class="mt-4" ng-show="desc98">
+                        It looks like you have already registed for this course! Thank you!
+                        If you think there is an error, or if you have forgotten your login
+                        credentials, please contact our office at bruce@brucegore.com.
+                    </h2>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="mt-3">
+            <h2>Courses</h2>
+        </div>
+
+        <div ng-controller="drop">
+            <div class="row mt-3">
+                <div class="dropdown col-md-5">
+                    <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                        Choose Subject
+                    </button>
+                    <ul class="dropdown-menu" style="font-size: larger">
+                        <li><a href="#" ng-click="courses('0')">Historical Context of the Bible</a></li>
+                        <li><a href="#" ng-click="courses('1')">Philosophy and History of Christian Thought</a></li>
+                        <li><a href="#" ng-click="courses('2')">Introduction to Romans</a></li>
+                        <li><a href="#" ng-click="courses('3')">History of the Christian Church</a></li>
+                        <li><a href="#" ng-click="courses('4')">Introduction to the book of Revelation</a></li>
+                        <li><a href="#" ng-click="courses('5')">Introduction to the Gospel of Mark</a></li>
+                        <li><a href="#" ng-click="courses('6')">The Life of David</a></li>
+                        <li><a href="#" ng-click="courses('7')">Presbyterians and the American Revolution</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-5" ng-show="ch1">
+                    <div>
+                        <h2>{{choice1}}</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-3" ng-show="reslt">
+                <div class="table table-responsive col-md-12">
+                    <table>
+                        <tr>
+                            <th>Title</th>
+                            <th>Book</th>
+                            <th>Date</th>
+                            <th>Description</th>
+                            <th>Play Options</th>
+                            <th></th>
+                        </tr>
+
+                        <tr ng-repeat="lecture in lectures">
+                            <td style="width: 240px;">{{lecture.title}}</td>
+                            <td><span ng-show="lecture.book != null">{{lecture.book}}</span>
+
+
+                                <span ng-show="lecture.chapter != 0">{{lecture.chapter}}</span>
+                                <span ng-show="lecture.verse != 0">:</span>
+                                <span ng-show="lecture.verse != 0">{{lecture.verse}}</span>
+                            </td>
+                            <td>{{lecture.date | date}}</td>
+                            <td style="width: 300px;">{{lecture.comment}} ({{lecture.id}})</td>
+                            <td>
+                                <a class="btn btn-primary" href="{{lecture.hyperlink}}">Audio</a>
+                            </td>
+                            <td>
+                                <button class="btn btn-primary" ng-show="lecture.videoLink != null"
+                                    ng-click="playVid(lecture.videoLink);">Video</button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <br /><br />
+    </div>

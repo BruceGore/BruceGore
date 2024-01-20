@@ -1,0 +1,27 @@
+@inject SignInManager<ApplicationUser> signInManager;
+
+<div class="container" style="background-color: #e1db9c">
+    <div ng-controller="drop" data-ng-init="init_Listener('@ViewBag.msg', '@ViewBag.course')">
+
+
+        <h1 class="text-center" style="font-style: italic; font-weight: bolder">Bruce W. Gore Online School of Christian
+            Studies</h1>
+
+
+        <p style="font-size: 30px">
+            Thank you for registering for {{crs}}! Your payment at PayPal has been confirmed. 
+            There appears to be a discrepancy between the email your provided to PayPal, which is 
+            @ViewBag.email, and the email you used to register with this site, which is 
+            @User.Identity.Name. To assure that your payment has been properly credited, 
+            please contact our office directly at bruce@brucegore.com. Thanks for your 
+            cooperation, and your interest in this course!
+
+        <btn class="btn btn-primary" ng-show="clk1" 
+            onclick="window.location.href='https:www.brucegore.com';">Close</btn>
+
+        <btn class="btn btn-primary" ng-show="clk2" 
+            onclick="window.location.href='https:www.brucegore.com/bwg/AcademicPaid.aspx?code=1';">Close</btn>
+
+
+    </div>
+</div>

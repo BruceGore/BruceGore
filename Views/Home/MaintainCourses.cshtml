@@ -1,0 +1,113 @@
+@model mvccore.Models.LessonDescription
+
+
+<div class="container">
+    <h1>Course Maintenance</h1>
+    <div class="mt-4" ng-controller="drop" data-ng-init="init_courseMaintain('@ViewBag.course')">
+        <div class="row">
+            <div class="dropdown col-md-3">
+                <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    Choose Subject
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="#" ng-click="init_courseMaintain('context')">Context of the Bible</a></li>
+                    <li><a href="#" ng-click="init_courseMaintain('phil1')">Philosophy 1</a></li>
+                    <li><a href="#" ng-click="init_courseMaintain('phil2')">Philosophy 2</a></li>
+                    <li><a href="#" ng-click="init_courseMaintain('4')">Church History</a></li>
+                    <li><a href="#" ng-click="init_courseMaintain('greek')">Greek</a></li>
+                    <li><a href="#" ng-click="init_courseMaintain('6')">Easy Greek</a></li>
+                    <li><a href="#" ng-click="init_courseMaintain('all')">All</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3" ng-show="ch1">
+                <div>
+                    <h2>{{choice1}}</h2>
+                </div>
+            </div>
+        </div>
+
+
+
+        
+        <div class="table table-responsive col-md-12 mt-4" ng-show="display">
+            <table>
+                <tr>
+                    <th>Id</th>
+                    <th>LessonId</th>
+                    <th>LessonTitle</th>
+                    <th>
+
+                        <a class="btn btn-primary col-md-10" ng-show="display1" asp-controller="Home" asp-action="CreateCourseInfo">
+                            Create Lecture
+                        </a>
+                    </th>
+                </tr>
+                <tr ng-repeat="item in courses">
+                    <td ng-click="CourseDetail(item.id)" style="color:blue; cursor: pointer">
+                        {{item.id}}</td>
+                    <td>{{item.lsnId}}</td>
+                    <td>{{item.lsnTitle}}</td>
+                </tr>
+            </table>
+        </div>
+
+
+        <form enctype="multipart/form-data" asp-controller="home" asp-action="EditComment3" method="post">
+            <div ng-show="courseDetail" ng-repeat="item in courses">
+                <div>===================================================================</div>
+
+                <h2 asp-for="Id">Edit Entry with Id: {{item.id}}</h2>
+                <input hidden ng-model="item.id" asp-for="Id" />
+
+                <div>
+                    <label style="font-weight: bold" class="col-md-2 mt-4">Lesson Id: </label>
+                    <input ng-model="item.lsnId" value="{{item.lsnId}}" 
+                        asp-for="LsnId" class="col-md-10" style="width: 300px" />
+                </div>
+
+                <div>
+                    <label style="font-weight: bold" class="col-md-2 mt-4">Lesson Description: </label>
+                    <textarea ng-model="item.lsnDesc" asp-for="LsnDesc" rows="7" cols="50"></textarea>
+                </div>
+
+
+                <div>
+                    <label style="font-weight: bold" class="col-md-2 mt-4">Lesson Title: </label>
+                    <input ng-model="item.lsnTitle" value="{{item.lsnTitle}}" class="col-md-10"
+                        asp-for="LsnTitle" style="width: 300px" />
+                </div>
+
+                <div>
+                    <label style="font-weight: bold" class="col-md-2 mt-4">Course: </label>
+                    <input ng-model="item.course" value="{{item.course}}" class="col-md-10" 
+                    asp-for="Course" style="width: 300px" />
+                </div>
+
+                <div>
+                    <label style="font-weight: bold" class="col-md-2 mt-4">Video: </label>
+                    <input ng-model="item.video" value="{{item.video}}" class="col-md-10" 
+                    asp-for="Video" style="width: 300px" />
+                </div>
+
+                <div>
+                    <label style="font-weight: bold" class="col-md-2 mt-4">Writing Assignment: </label>
+                    <textarea ng-model="item.writingAssignment" asp-for="WritingAssignment" rows="5" cols="50"></textarea>
+                </div>
+
+                <div>
+                    <label style="font-weight: bold" class="col-md-2 mt-4">Miscellaneous: </label>
+                    <input ng-model="item.misc" value="{{item.misc}}" class="col-md-10"
+                    asp-for="Misc" style="width: 300px" />
+                </div>
+
+                <label style="font-weight: bold" class="col-md-2"></label>
+                <input ng-click="init_courseMaintain(item.course)" style="width: 70px"
+                    class="col-md-2 btn btn-primary mt-2" value="Cancel">
+                <input type="submit" style="width: 50px" class="col-md-2 btn btn-primary mt-2" value="Save">
+
+            </div>
+        </form>
+        <br /><br />
+
+    </div>
+</div>

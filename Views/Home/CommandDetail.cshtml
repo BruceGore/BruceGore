@@ -1,0 +1,50 @@
+@model mvccore.Models.Commandments
+
+
+
+<h1>Command Details</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8 col-md-8 col-lg-8">
+            <h1>ID: @Model.ID</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <h2>Class: @Model.Number</h2>
+    </div>
+
+    <div class="row">
+        <h2>Topic: @Model.Text</h2>
+    </div>
+
+
+
+    <div class="row">
+        <div class="card-footer text-center">
+            <a asp-controller="home" asp-action="about" class="btn btn-primary">Back</a>
+
+            <a asp-action="EditLecture" asp-controller="home" asp-route-id="@Model.ID" 
+                class="btn btn-primary">Edit</a>
+
+<!--
+            <a href="#" class="btn btn-danger">Delete</a>
+-->
+
+
+            <span id="confirmDeleteSpan" style="display: none">
+                <span>  Are you sure you want to delete?</span>
+                <a asp-controller="home" asp-action="Delete" style="height: 25px" asp-route-id="@Model.ID"
+                class="btn btn-danger m-1">Yes</a>
+                <a href="#" class="btn btn-primary" onclick="confirmDelete('@Model.ID', false)">No</a>
+            </span>
+
+            <span id="deleteSpan">
+                <a href="#" class="btn btn-danger" onclick="confirmDelete('@Model.ID', true)">Delete</a>
+            </span>
+
+
+        </div>
+    </div>
+</div>

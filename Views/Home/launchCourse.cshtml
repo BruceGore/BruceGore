@@ -1,0 +1,732 @@
+@model mvccore.ViewModels.launchCourseViewModel
+
+
+
+@* @model mvccore.Models.WritingAssignment *@
+
+
+<h1>Bruce W. Gore Online School of Christian Studies</h1>
+
+<div class="container">
+    <div ng-controller="drop" 
+        data-ng-init="init_course('@ViewBag.course', '@ViewBag.user', '@ViewBag.status', '@ViewBag.courseId')">
+        <h2>{{courseName}}</h2>
+        <h2>@ViewBag.user</h2>
+
+        <div ng-show="units">
+
+            <button id="unit_1" class="btn btn-primary mt-4"
+                ng-click="courseModules('1', '@ViewBag.course', '@ViewBag.user')">
+                <h1>Unit 1</h1>
+            </button>
+
+            <button id="unit_2" class="btn btn-primary mt-4 ml-4"
+                ng-click="courseModules('2', '@ViewBag.course', '@ViewBag.user')">
+                <h1>Unit 2</h1>
+            </button>
+
+            <button id="unit_3" class="btn btn-primary mt-4 ml-4"
+                ng-click="courseModules('3', '@ViewBag.course', '@ViewBag.user')">
+                <h1>Unit 3</h1>
+            </button>
+
+            <button id="unit_4" class="btn btn-primary mt-4 ml-4"
+                ng-click="courseModules('4', '@ViewBag.course', '@ViewBag.user')">
+                <h1>Unit 4</h1>
+            </button>
+
+            <button id="unit_5" class="btn btn-primary mt-4 ml-4 float-right" ng-show="teacher"
+                style="width: 200px" ng-click="courseModules('5', '@ViewBag.course', '@ViewBag.user')">
+                <h1>Add/Manage students</h1>
+            </button>
+
+
+
+
+        </div>
+
+        <h1 class="mt-4" ng-show="lessonTitle">Lessons for {{courseName}}: Unit {{unitNumber}}</h1>
+
+
+        <div ng-repeat="item in courses" ng-show="lessons">
+            <button id="{{item.id}}" class="btn btn-primary mt-4 ml-4" style="width: 300px"
+                ng-click="courseInfo(item.id, item.lsnId, item.lsnTitle, '@ViewBag.course', '@ViewBag.user')">
+                {{item.lsnTitle}}
+            </button>
+        </div>
+
+        <input ng-show="lessons" ng-click="init_course('@ViewBag.course', '@ViewBag.user')" style="width: 300px"
+            class="btn btn-primary mt-4 ml-4" value="Ok, I'm Done">
+
+        <div>
+            <h2>{{title}}</h2>
+        </div>
+
+        <div ng-show="steps">
+
+            <button id="step1" class="btn btn-primary mt-4 ml-4" style="width: 300px"
+                ng-click="stepModules('1', '@ViewBag.course', '@ViewBag.user')">
+                <h3>Step 1</h3>
+            </button>
+            <br />
+
+            <button id="step2" class="btn btn-primary mt-4 ml-4" style="width: 300px"
+                ng-click="stepModules('2', '@ViewBag.course', '@ViewBag.user')">
+                <h3>Step 2</h3>
+            </button>
+            <br />
+
+            <button id="step3" class="btn btn-primary mt-4 ml-4" style="width: 300px"
+                ng-click="stepModules('3', '@ViewBag.course', '@ViewBag.user')">
+                <h3>Step 3</h3>
+            </button>
+            <br />
+
+            <button id="step4" class="btn btn-primary mt-4 ml-4" style="width: 300px"
+                ng-click="stepModules('4', '@ViewBag.course', '@ViewBag.user')">
+                <h3>Step 4</h3>
+            </button>
+            <br />
+
+            <button id="step5" class="btn btn-primary mt-4 ml-4" style="width: 300px"
+                ng-click="stepModules('5', '@ViewBag.course', '@ViewBag.user')">
+                <h3>Step 5</h3>
+            </button>
+
+            <br /><br />
+
+            <button id="step6" class="btn btn-primary mt-4 ml-4" style="width: 300px"
+                ng-click="stepModules('6', '@ViewBag.course', '@ViewBag.user')">
+                <h3>Ok, I'm Done6</h3>
+            </button>
+
+        </div>
+
+        <div ng-repeat="item in description">
+            <h2 class="mt-4">{{item}}</h2>
+        </div>
+
+
+
+
+        <div ng-show="downloads" class="mt-4">
+            <h3>Step 2: Downloads</h3>
+            <div ng-repeat="item in downloadInfo">
+                <button id="{{item.id}}" class="btn btn-primary mt-4 ml-4" style="width: 300px"
+                    ng-click="downloadInf(item.link, item.desc)">
+                    <h3>{{item.desc}}</h3>
+                </button>
+                <a href="~/{{item.link}}">click here if Edge browser</a>
+            </div>
+        </div>
+
+        <h3 ng-show="itmdsc" class="mt-4">{{itemDesc}}</h3>
+
+        <object ng-show="pdfDisplay" class="mt-4" data="~/{{linkId}}" type="application/pdf" width="900"
+            height="1200"></object>
+
+        <div ng-show="gkdownload"><br /></div>
+        <a ng-show="gkdownload" class="ml-4" href="~/{{dwnload}}"><h3>Please click here for download</h3></a>
+        <div ng-show="gkdownload"><br /></div>
+
+        <a ng-show="gkdownloadtxt" class="ml-4" href="{{dwnload}}"><h3>Please click here for text</h3></a>
+        
+
+        <div ng-show="videoPlayer">
+            <iframe id="video" style="position:fixed:top:150px;right:50px" width="800" height="550"
+                ng-src="{{videoLink}}" frameborder="solid" allowfullscreen></iframe>
+        </div>
+
+
+        <div class="mt-4" ng-show="takeQuiz">
+            <h2>Quiz for Unit {{qzUnit}}, Lesson {{qzLesson}}</h2>
+            <div ng-repeat="item in quizQuestion">
+                <h1 ng-model="correctAnswer">Question {{qzNumber}}: {{item.qzQst}}</h1>
+            </div>
+            <br />
+            <div class="row" ng-repeat="item in quizOptions">
+                <input name="options" class="col-md-1" style="height:20px; width:20px;"
+                    ng-click="radioClick(item.qzRef)" type="radio">
+                <h2 class="ml-4 col-md-9">{{item.qzQst}}</h2>
+            </div>
+        </div>
+
+        <div class="mt-4" ng-show="qzAnswer">
+            <div ng-repeat="item in quizAnswer">
+                <h1>{{item.qzQst}}</h1>
+            </div>
+        </div>
+
+        <div ng-show="imDone5">
+            <h1>Your score for the quiz is: {{quizScore}}%</h1>
+        </div>
+
+        <form enctype="multipart/form-data" ng-show="essay" asp-controller="home" asp-action="EditComment5"
+            method="post">
+
+            <input hidden ng-model="id" asp-for="Id" />
+
+            <input hidden ng-model="email" asp-for="Email" />
+
+            <input hidden ng-model="userid" asp-for="UserId" />            
+
+            <input hidden ng-model="coursecode" asp-for="CourseCode" />
+
+            <div class="form-group col-md-10 mt-4">
+                <textarea class="form-control" ng-model="essayQuestion" rows="3" asp-for="Question"
+                    style="font-size: 18px; border: none; font-style: italic" readonly></textarea>
+            </div>
+
+            <div class="form-group col-md-10 mt-4">
+                <textarea class="form-control" ng-model="essayAnswer" rows="9" asp-for="Answer"
+                    style="font-size: 20px"></textarea>
+            </div>
+
+            <input hidden ng-model="critique" asp-for="Critique" />
+
+            <input hidden ng-model="score" asp-for="Score" />
+
+            <input hidden ng-model="addcritique" asp-for="AddCritique" />
+
+            <input hidden ng-model="svTtl" asp-for="SaveTitle" />
+
+            <input ng-click="toggleEssay()" style="width: 100px" 
+                class="col-md-2 btn btn-primary mt-2 ml-4" value="Toggle Save Mode">
+
+            <input type="submit" style="width: 200px" ng-show="savFin" class="col-md-3 btn btn-primary mt-2" 
+                value="Save Final (no more edits)">
+
+            <input type="submit" style="width: 200px" ng-show="savTmp" class="col-md-3 btn btn-primary mt-2" 
+                value="Save Temporary (more edits ok)">
+
+            <input ng-click="stpCancel()" style="width: 100px"
+                class="col-md-2 btn btn-primary mt-2" value="Cancel">
+        </form>
+
+        <div ng-show="essayReview" class="col-md-10 mt-4">
+            <h3 style="color: green; font-style: italic">This is your final essay. No further edits allowed.</h3>
+            <textarea ng-model="essayAnswer" class="mt-3" readonly rows="9" cols="60" style="font-size: 15px"></textarea>            
+        </div>
+
+        <div ng-show="essayReview1" class="col-md-10 mt-4">
+            <h3 style="color: green; font-style: italic">Critique by your teacher (if any):</h3>
+            <div id="testID" class="mt-3" readonly rows="9" cols="60" 
+                style="font-size: 20px; border-width:3px; border-style:solid; border-color:#FF0000"></div>
+            @* <textarea ng-model="critique" class="mt-3" readonly rows="9" cols="60" style="font-size: 15px; "></textarea>             *@
+        </div>
+
+        <div ng-show="addReview" class="col-md-10 mt-4">
+            <h3 style="color: green; font-style: italic">Further comments by your teacher:</h3>
+            <textarea ng-model="addCritique" class="mt-4" readonly rows="9" cols="60" style="font-size: 15px; "></textarea>            
+        </div>
+
+        <div ng-show="addReview1" class="col-md-10 mt-4">
+            <h3 style="color: green; font-style: italic">Further comment by your teacher (if any):</h3>
+            <div id="testIDX" class="mt-3" readonly rows="9" cols="60" 
+                style="font-size: 20px; border-width:3px; border-style:solid; border-color:#FF0000"></div>
+            @* <textarea ng-model="critique" class="mt-3" readonly rows="9" cols="60" style="font-size: 15px; "></textarea>             *@
+        </div>
+
+
+        <div ng-show="essayReview2" class="row col-md-10 mt-2">
+            <h3 class="mt-4" style="color: green; font-style: italic">Score for this essay: </h3>
+            <textarea ng-model="score" class="ml-4 mt-4" readonly rows="1" 
+                cols="3" style="font-size: 25px; border: none"></textarea>
+                <h1>%</h1>
+        </div>
+
+
+
+        <button ng-show="imDone1" class="btn btn-primary mt-4 ml-4" style="width: 300px" ng-model="btnChoice"
+            ng-click="imDone(btnChoice, '@ViewBag.course', '@ViewBag.user')">
+            <h3>Ok, I'm done1</h3>
+        </button>
+
+        <button ng-show="imDone2" class="btn btn-primary mt-4 ml-4" style="width: 300px" ng-model="btnChoice"
+            ng-click="imDn2(btnChoice, '@ViewBag.course', '@ViewBag.user')">
+            <h3>Ok, I'm done2</h3>
+        </button>
+
+        <button ng-show="imDone3" class="btn btn-primary mt-4 ml-4" style="width: 300px" ng-model="btnChoice"
+            ng-click="imDn3(btnChoice, '@ViewBag.course', '@ViewBag.user')">
+            <h3>Submit1</h3>
+        </button>
+
+        <button ng-show="imDone4" class="btn btn-primary mt-4 ml-4" style="width: 300px" ng-model="btnChoice"
+            ng-click="imDn4(btnChoice, '@ViewBag.course', '@ViewBag.user')">
+            <h3>Next Question1</h3>
+        </button>
+
+        <div ng-show="teacherAdd" class="mt-4">
+            <h3>You may add students to your roster (up to 10) by provided an email and 
+                password for each student. To use the site, the student that you added 
+                must register (upper right) using the email and password you provided! 
+                If you prefer, you may register your student (upper right), and then 
+                provide login information to your student.
+            </h3>
+
+            <form method="post" asp-controller="account" asp-action="stuRegister">
+
+                <div class="form-group col-md-10">
+                    <div class="row ml-4 mt-4">
+                        <label asp-for="Email" class="col-md-2"><h3>Email: </h3></label>
+                        <input asp-for="Email" ng-model="stuEmail" style="width: 300px; font-size: 16px" class="form-control ml-4" />
+                        <span asp-validation-for="Email" style="font-size: 16px" class="text-danger ml-4"></span>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-10">
+                    <div class="row ml-4 mt-4">
+                        <label asp-for="Password" class="col-md-2"><h3>Password: </h3></label>
+                        <input asp-for="Password" ng-model="stuPass" style="width: 300px; font-size: 16px" class="form-control ml-4" />
+                        <span asp-validation-for="Password" style="font-size: 16px" class="text-danger ml-4"></span>
+                    </div>
+                </div>
+
+                <input hidden ng-model="coursecode" asp-for="CourseCode" />
+
+                <input hidden ng-model="teacheremail" asp-for="TeacherEmail" />
+
+                <button type="submit" class="btn btn-primary">Register</button>                
+
+            </form>
+
+            <div class="mt-4"><h3>Students you currently have registered are listed 
+                below. Click the student id to manage student performance and 
+                progress. </h3></div>
+
+
+            
+
+            <div class="mt-4" ng-repeat="item in teastu">
+                @* <button id="{{item.id}}" class="btn btn-primary mt-4 ml-4" style="width: 300px"
+                    ng-click="downloadInf(item.link, item.desc)"> *@
+                    <h3 style="color:blue; cursor: pointer" ng-click="studentDisplay(item.userEmail)">
+                        {{item.userEmail}}
+                    </h3>
+                </button>                
+            </div>       
+
+
+
+        </div>
+
+        <div ng-show="stuDetail">
+            <h2>The buttons below provide details for {{studentId}}</h2>
+
+            <button class="btn btn-primary mt-4 ml-4" style="width: 200px"
+                ng-click="stuDtl('quizzes', '@ViewBag.course')">
+                <h3>Quizzes</h3>
+            </button>
+
+            <button class="btn btn-primary mt-4 ml-4" style="width: 200px"
+                ng-click="stuDtl('tests', '@ViewBag.course')">
+                <h3>Tests</h3>
+            </button>
+
+            <button class="btn btn-primary mt-4 ml-4" style="width: 200px"
+                ng-click="stuDtlWriting('papers', '@ViewBag.course')">
+                <h3>Essays</h3>
+            </button>
+
+            <br />
+
+            <button class="btn btn-primary mt-4 ml-4" style="width: 200px"
+                ng-click="stuDtl('finalScore', '@ViewBag.course')">
+                <h3>Final Score</h3>
+            </button>
+
+            <button class="btn btn-primary mt-4 ml-4" style="width: 200px"
+                ng-click="stuDtl('finalGrade', '@ViewBag.course')">
+                <h3>Final Grade</h3>
+            </button>
+
+            <button class="btn btn-primary mt-4 ml-4" style="width: 200px"
+                ng-click="stuDtl('progress', '@ViewBag.course')">
+                <h3>Progress</h3>
+            </button>
+
+        </div>
+
+
+        <div class="row" >
+            <div class="col-sm-6">
+                <div ng-repeat="name in controller.names">
+                    <label>{{ name }}</label>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div ng-repeat="value in controller.values">
+                    <label>{{ value }}</label>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="mt-4 ml-4"><h2>{{scoreHeading}}</h2>
+
+            <h2>{{prog}}</h2>
+
+            <div ng-show="stuDetails" class="row">
+
+                <div class="col-md-1">
+                    <div ng-repeat="item in stuScores1">
+                        <h3>{{item.firstName}}</h3>
+                    </div>
+                    <h3>{{avg}}</h3>
+                </div>
+
+                <div class="col-md-2">
+                    <div ng-repeat="item in stuScores1" style="color:blue; cursor: pointer">
+                        <h3 id="{{item.unit}}:{{item.firstName}}"
+                        ng-click="scrUpdate(item.firstName, item.lastName, '1')">{{item.lastName}}%</h3>
+                    </div>
+                    <h3>{{average1 | number:0}}</h3>
+                </div>
+
+                <div class="col-md-2">
+                    <div ng-repeat="item in stuScores2" style="color:blue; cursor: pointer">
+                        <h3 id="{{item.unit}}:{{item.firstName}}"
+                        ng-click="scrUpdate(item.firstName, item.lastName, '2')">{{item.lastName}}%</h3>
+                    </div>
+                    <h3>{{average2 | number:0}}</h3>
+                </div>
+
+                <div class="col-md-2">                
+                    <div ng-repeat="item in stuScores3" style="color:blue; cursor: pointer">
+                        <h3 id="{{item.unit}}:{{item.firstName}}"
+                        ng-click="scrUpdate(item.firstName, item.lastName, '3')">{{item.lastName}}%</h3>
+                    </div>
+                    <h3>{{average3 | number:0}}</h3>
+                </div>
+
+                <div class="col-md-2">
+                    <div ng-repeat="item in stuScores4" style="color:blue; cursor: pointer">
+                        <h3 id="{{item.unit}}:{{item.firstName}}"
+                        ng-click="scrUpdate(item.firstName, item.lastName, '4')">{{item.lastName}}%</h3>
+                    </div>
+                    <h3>{{average4 | number:0}}</h3>
+                </div>
+
+            </div>            
+
+            
+            
+            @* This handles scores from essay file *@
+            
+            <div ng-show="stuPapersDsply" class="row">
+
+                <div class="col-md-1">
+                    <div ng-repeat="item in stuPapers1">
+                        <h3>{{$index + 1}}</h3>
+                    </div>
+                    <h3>{{avg}}</h3>
+                </div>
+            
+                <div class="col-md-2"> 
+                    <div ng-repeat="itx in stuPapers1" style="color:blue; cursor: pointer">
+                        <h3 class="col-md-1"></h3>
+                        <h3 id="{{itx.entryId}}" 
+                            class="col-md-1" ng-click="papUpdate(itx.entryId, itx.entryScore, '@ViewBag.course')">
+                            {{itx.entryScore | number }}%
+                        </h3>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div ng-repeat="itx in stuPapers2" style="color:blue; cursor: pointer">
+                        <h3 id="{{itx.entryId}}" 
+                            class="col-md-1" ng-click="papUpdate(itx.entryId, itx.entryScore, '@ViewBag.course')">
+                            {{itx.entryScore | number }}%
+                        </h3>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div ng-repeat="itx in stuPapers3" style="color:blue; cursor: pointer">
+                        <h3 id="{{itx.entryId}}" 
+                            class="col-md-1" ng-click="papUpdate(itx.entryId, itx.entryScore, '@ViewBag.course')">
+                            {{itx.entryScore | number }}%
+                        </h3>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div ng-repeat="itx in stuPapers4" style="color:blue; cursor: pointer">                    
+                        <h3 id="{{itx.entryId}}" 
+                            class="col-md-1" ng-click="papUpdate(itx.entryId, itx.entryScore, '@ViewBag.course')">
+                            {{itx.entryScore | number }}%
+                        </h3>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div ng-show="papDtl" class="mt-4" ng-repeat="itx in stuPapers">
+
+                <div class="row">
+                    <label style="font-weight: bold; font-size: 20px" class="col-md-3 mt-2">Entry Id: </label>
+                    <input ng-model="itx.id" style="border:none; font-size: 20px" readonly value="{{itx.id}}" class="col-md-6" />
+                </div>
+
+                <div class="row">
+                    <label style="font-weight: bold; font-size: 20px" class="col-md-3 mt-2">Student Email: </label>
+                    <input ng-model="itx.email" style="border:none; font-size: 20px; width: 150px" readonly value="{{itx.email}}" class="col-md-6" />
+                </div>
+
+                <div class="row">
+                    <label style="font-weight: bold; font-size: 20px" class="col-md-3 mt-2">User ID: </label>
+                    <input ng-model="itx.userId" style="border:none; font-size: 20px; width: 150px" readonly value="{{itx.userId}}" class="col-md-6" />
+                </div>
+
+                <div class="row">
+                    <label style="font-weight: bold; font-size: 20px" class="col-md-3 mt-2">Course Code: </label>
+                    <input ng-model="courseCode" style="border:none; font-size: 20px; width: 150px" readonly value="{{itx.courseCode}}" class="col-md-6" />
+                </div>
+
+                <div class="row">
+                    <label style="font-weight: bold; font-size: 20px" class="col-md-3">Question: </label>                    
+                    <span ng-model="itx.question" style="border:none; font-size: 18px; width: 150px" class="col-md-9">{{itx.question}}</span>
+                </div>
+
+                @* <h3>{{itx.score}}</h3> *@
+            </div>
+
+            <div ng-show="essayInfo">
+                <h1>Essay for Unit {{qzUnit}}, Lesson {{qzLesson}}</h1>
+
+                <div class="row">
+                    <label style="font-weight: bold; font-size: 20px" class="col-md-3 mt-3">Question: </label>
+                    <textarea ng-model="essayQuestion" style="border: none; font-size: 18px; font-style: italic" class="mt-3 col-md-9" 
+                        readonly rows="4" cols="40"></textarea>
+                </div>
+
+                <div class="row">
+                    <label style="font-weight: bold; font-size: 20px" class="col-md-3 mt-3">Student Essay: </label>
+                    <textarea ng-model="essayAnswer" style="border: none; font-size: 20px" class="mt-3 col-md-9" 
+                        readonly rows="9" cols="40"></textarea>
+                </div>            
+                <div><h2>======================Teacher Comment======================</h2></div>
+
+                <div class="row">
+                    <label style="font-weight: bold; font-size: 20px" class="col-md-3 mt-3"></label>
+                    <textarea id="testIDx" style="border:none; font-size: 20px; font-style: italic; color: green"
+                        readonly class="mt-3 col-md-9" rows="5" cols="40">{{teacherInstr}}</textarea>
+                </div>                
+
+                <div id="testID" class="mt-4"></div>
+
+
+
+                <div class="row">
+                    <label style="font-weight: bold; font-size: 20px" class="col-md-3 mt-4">Teacher Critique: </label>
+                    <textarea ng-model="essayCritique" style="font-size: 20px" class="mt-4 col-md-9" 
+                        rows="9" cols="40"></textarea>
+                </div>
+
+                <div class="row">
+                    <label style="font-weight: bold; font-size: 20px" class="col-md-3 mt-4">Additional Comments: </label>                    
+                    <textarea ng-model="addComments" placeholder="Additional comments here" style="font-size: 20px" class="mt-4 col-md-9" 
+                        rows="9" cols="40"></textarea>
+                </div>
+
+                <div class="row" ng-show="scoreField">
+                    <label style="font-weight: bold; font-size: 20px" class="col-md-3 mt-3">Score for Essay: </label>
+                    <textarea ng-model="essayScore" placeholder="1 - 100" style="font-size: 30px" class="mt-3 col-md-2" 
+                        rows="1" cols="8"></textarea><h1 class="ml-2">%</h1>
+                </div>
+
+            </div>
+
+            <div ng-show="unitScores">
+
+                <div class="row">
+                    <label style="font-weight: bold; font-size: 20px" class="col-md-3 mt-3">Score for Unit 1: </label>
+                    <textarea ng-model="unitOneScore" placeholder="1 - 100" style="font-size: 30px" class="mt-3 col-md-2" 
+                        rows="1" cols="6"></textarea><h1 class="ml-2">%</h1>
+                </div>
+
+                <div class="row">
+                    <label style="font-weight: bold; font-size: 20px" class="col-md-3 mt-3">Score for Unit 2: </label>
+                    <textarea ng-model="unitTwoScore" placeholder="1 - 100" style="font-size: 30px" class="mt-3 col-md-2" 
+                        rows="1" cols="6"></textarea><h1 class="ml-2">%</h1>
+                </div>
+
+                <div class="row">
+                    <label style="font-weight: bold; font-size: 20px" class="col-md-3 mt-3">Score for Unit 3: </label>
+                    <textarea ng-model="unitThreeScore" placeholder="1 - 100" style="font-size: 30px" class="mt-3 col-md-2" 
+                        rows="1" cols="6"></textarea><h1 class="ml-2">%</h1>
+                </div>
+
+                <div class="row">
+                    <label style="font-weight: bold; font-size: 20px" class="col-md-3 mt-3">Score for Unit 4: </label>
+                    <textarea ng-model="unitFourScore" placeholder="1 - 100" style="font-size: 30px" class="mt-3 col-md-2" 
+                        rows="1" cols="6"></textarea><h1 class="ml-2">%</h1>
+                </div>
+
+            </div>
+
+            <div ng-show="finalGrade">
+
+                <div class="row">
+                    <label style="font-weight: bold; font-size: 20px" class="col-md-3 mt-3">Final Grade: </label>
+                    <textarea ng-model="finalGrd" placeholder="Grade" style="font-size: 30px" class="mt-3 col-md-2" 
+                        rows="1" cols="6"></textarea>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="mt-4 row" ng-show="fixScore">
+            <h2>Please enter corrected score for this item: </h2>
+            <input ng-model="score" class="ml-4" 
+                style="height:30px; width:80px; font-size: 30px" value="{{score}}">
+            <button class="btn btn-primary ml-4" style="width: 200px"
+                ng-click="postScore()">
+                <h3>Submit2</h3>
+            </button>
+        </div>
+
+        <div ng-show="saveChanges">
+            <button class="btn btn-primary ml-4 mt-4" style="width: 200px"
+                ng-click="saveChangex('@ViewBag.course', studentId)">
+                <h3>Save Changes</h3>
+            </button>
+            <button class="btn btn-primary ml-4 mt-4" style="width: 200px"
+                ng-click="cancelChanges()">
+                <h3>Cancel Changes</h3>
+            </button>
+        </div>
+
+        <div ng-show="essayInfo">
+            <label style="font-weight: bold; font-size: 20px" class="col-md-3 mt-4"></label>
+            <button class="btn btn-primary mt-4" style="width: 200px"
+                ng-click="saveChangey('@ViewBag.course', studentId)">
+                <h3>Save Changes</h3>
+            </button>
+            <button class="btn btn-primary mt-4" style="width: 200px"
+                ng-click="cancelChangey()">
+                <h3>Cancel Changes</h3>
+            </button>
+        </div>
+
+        <div ng-show="grkKeyboard">
+
+            <div class="col-md-6" style="font-weight: bolder; font-style: italic">
+                <h3>{{text01}}</h3>
+            </div>
+
+            <div ng-show="alphaString" class="col-md-12 row">
+                <div ng-repeat="alpha in alphabet">
+                    <img src="~/grkDictionary/{{alpha}}" height="40px" class="ml-2" />
+                </div>                
+            </div><br />
+
+            <img ng-show="greekPrompt" src="~/grkDictionary/{{grkLtr}}" height="50px" />
+            <img ng-show="ltrTry" src="~/grkDictionary/{{grkLtrTry}}" height="50px" />
+            <img ng-show="ltrConfrm" src="~/grkImages/{{grkLtrConfirm}}" height="50px" />
+            <br /><br />
+
+            <img id="keybrd" ng-click="keybd($event)" src="~/images/kybd.jpg" class="img-fluid" />
+            <input id="inputKeyboard" type="text" style="border: none" size="1" ng-keydown="extKeyBd($event)" >
+            <br />
+
+
+            @* This routine calls extKeyBd *@
+            <button id="grkKyBd" ng-show="grkKeyboardCont" class="btn btn-primary mt-4" style="width: 300px">
+                <h3>Good! Click here to continue!</h3>
+            </button>
+
+            <button id="alphaRepeat" ng-show="alphaRpt" class="btn btn-primary mt-4" style="width: 300px"
+                ng-click="greekAlphabet(1)">
+                <h3>Repeat Exercise</h3>
+            </button>
+
+            <button id="alphaProgress" ng-show="alphaRpt" class="btn btn-primary mt-4" style="width: 300px"
+                ng-click="greekAlphabet(2, '@ViewBag.course', '@ViewBag.user')">
+                <h3>Next Exercise</h3>
+            </button>
+
+        </div>
+
+        <div ng-show="grkQuiz">
+            <h1>Here is a Greek Quiz</h1>
+            <h3>Choose the best answer</h3>
+            <br />
+            <h2>{{question}}</h2>
+            <br />
+
+            <div class="row">
+                <input ng-checked="chkStatus1" name="grkOptions" class="col-md-1" style="height:15px; width:15px;"
+                    ng-model="checked1" value="true" ng-click="radioClick(1)" type="radio">
+                <div id="option1"></div>
+            </div>
+
+            <div class="row mt-4">
+                <input ng-checked="chkStatus2" name="grkOptions" class="col-md-1" style="height:15px; width:15px;" 
+                    ng-click="radioClick(2)" type="radio">
+                <div id="option2"></div>
+            </div>
+
+            <div class="row mt-4">
+                <input ng-checked="chkStatus3" name="grkOptions" class="col-md-1" style="height:15px; width:15px;" 
+                    ng-click="radioClick(3)" type="radio">
+                <div id="option3"></div>
+            </div>
+
+            <div class="row mt-4">
+                <input ng-checked="chkStatus4" name="grkOptions" class="col-md-1" style="height:15px; width:15px;" 
+                    ng-click="radioClick(4)" type="radio">
+                <div id="option4"></div>
+            </div>
+
+            <div class="row mt-4">
+                <input ng-checked="chkStatus5" name="grkOptions" class="col-md-1" style="height:15px; width:15px;" 
+                    ng-click="radioClick(5)" type="radio">
+                <div id="option5"></div>
+            </div>
+
+            <button class="btn btn-primary mt-4 ml-4" style="width: 300px" ng-model="btnChoice"
+                ng-show="submit3" ng-click="imDn6(btnChoice, '@ViewBag.course', '@ViewBag.user')">
+                <h3>Submit3</h3>
+            </button>
+
+            <h1 class="ml-4 mt-4">{{answerResponse}}</h1>
+
+            <button ng-show="nxtGrkQst" class="btn btn-primary mt-4 ml-4" style="width: 300px"
+                ng-click="greekQz('@ViewBag.user')">
+                <h3>Next Question2</h3>
+            </button>            
+        </div>
+        <div><h2>{{displayAnswer}}</h2></div>
+
+
+        <input hidden ng-model="prg" />
+        <input hidden ng-model="scores1" />
+        <input hidden ng-model="scores2" />
+        <input hidden ng-model="scores3" />
+        <input hidden ng-model="scores4" />
+        <input hidden ng-model="id" />
+        <input hidden ng-model="score" />
+        <input hidden ng-model="saveunit" />
+        <input hidden ng-model="savelesson" />
+        <input hidden ng-model="savestep" />
+        <input hidden ng-model="papReview" />
+        <input hidden ng-model="papIndex" />
+        <input hidden ng-model="lsnNumber" />
+        <input hidden ng-model="saveTitle" />
+        <input hidden ng-model="count" />
+        <input hidden ng-model="alphaRoutine" />
+        <input hidden ng-model="alphaRandom" />
+        <input hidden ng-model="grkChoice" />
+        
+
+
+        <br /><br />
+
+
+
+    </div>
+</div>

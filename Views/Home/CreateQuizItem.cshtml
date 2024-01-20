@@ -1,0 +1,42 @@
+@model QuizTable
+
+<h1>Create Quiz Item</h1>
+
+
+<form asp-controller="home" asp-action="EditQuizzes" method="post" class="mt-12">
+
+
+    <div class="form-group row">
+        <label style="font-weight: bold" asp-for="Course" class="col-md-2 col-form-label">Course</label>
+        <div class="col-md-10">
+            <input style="width: 300px" asp-for="Course" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label style="font-weight: bold" asp-for="QzRef" class="col-md-2 col-form-label">Reference</label>
+        <div class="col-md-10">
+            <input style="width: 300px" asp-for="QzRef" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label style="font-weight: bold" asp-for="QzQst" class="col-md-2 col-form-label">Question</label>
+        <div class="col-md-10">
+            <input style="width: 300px" asp-for="QzQst" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label style="font-weight: bold" asp-for="QzAns" class="col-md-2 col-form-label">Answer</label>
+        <div class="col-md-10">
+            <input style="width: 300px" asp-for="QzAns" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-10">
+            <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,134 @@
+<div class="container">
+    <h1>Registered Users</h1>
+    <div class="mt-4" ng-controller="drop" data-ng-init="init_users()">
+        <div class="table table-responsive col-md-12">
+            <table>
+                <tr>
+                    <th ng-click="sortUsers('email')" style="color:blue; cursor: pointer; width: 70px">Email ID</th>
+                    <th ng-click="sortUsers('name')" style="color:blue; cursor: pointer; width: 150px">Name</th>
+                    <th style="width: 200px">Address</th>
+                    <th style="width: 75px">Password</th>
+                </tr>
+
+                <tr ng-repeat="user in users">
+                    <td ng-click="sortUsers('dtl', user.idx)" style="cursor: pointer">{{user.idx | limitTo:25}}</td>
+                    <td>{{user.last}}, {{user.first}} {{user.middle}}</td>
+                    <td>{{user.add1}} {{user.add2}} {{user.city}} {{user.state}} {{user.country}} {{user.post}}</td>
+                    <td>{{user.passwd}}</td>
+                </tr>
+            </table>
+        </div>
+
+        <div ng-show="userPanel" ng-repeat="user in users">
+            <div>===============================================================</div>
+
+            <div class="mt-4">
+                <label style="font-weight: bold" class="col-md-2">First Name: </label>
+                <input ng-model="user.first" value="{{user.first}}" class="col-md-10" style="width: 150px" />
+            </div>
+
+            <div class="mt-4">
+                <label style="font-weight: bold" class="col-md-2">Middle Name: </label>
+                <input ng-model="user.middle" value="{{user.middle}}" class="col-md-10" style="width: 150px" />
+            </div>
+
+            <div class="mt-4">
+                <label style="font-weight: bold" class="col-md-2">Last Name: </label>
+                <input ng-model="user.last" value="{{user.last}}" class="col-md-10" style="width: 150px" />
+            </div>
+
+            <div class="mt-4">
+                <label style="font-weight: bold" class="col-md-2">Teacher: </label>
+                <input ng-model="user.teach" value="{{user.teach}}" class="col-md-10" style="width: 150px" />
+            </div>
+
+            <div class="mt-4">
+                <label style="font-weight: bold" class="col-md-2">Address Line 1: </label>
+                <input ng-model="user.add1" value="{{user.add1}}" class="col-md-10" style="width: 150px" />
+            </div>
+
+            <div class="mt-4">
+                <label style="font-weight: bold" class="col-md-2">Address Line 2: </label>
+                <input ng-model="user.add2" value="{{user.add2}}" class="col-md-10" style="width: 150px" />
+            </div>
+
+            <div class="mt-4">
+                <label style="font-weight: bold" class="col-md-2">City: </label>
+                <input ng-model="user.city" value="{{user.city}}" class="col-md-10" style="width: 150px" />
+            </div>
+
+            <div class="mt-4">
+                <label style="font-weight: bold" class="col-md-2">State or Province: </label>
+                <input ng-model="user.state" value="{{user.state}}" class="col-md-10" style="width: 150px" />
+            </div>
+
+            <div class="mt-4">
+                <label style="font-weight: bold" class="col-md-2">Country: </label>
+                <input ng-model="user.country" value="{{user.country}}" class="col-md-10" style="width: 150px" />
+            </div>
+
+            <div class="mt-4">
+                <label style="font-weight: bold" class="col-md-2">Postal Code: </label>
+                <input ng-model="user.post" value="{{user.post}}" class="col-md-10" style="width: 150px" />
+            </div>
+
+            <div class="mt-4">
+                <label style="font-weight: bold" class="col-md-2">Password: </label>
+                <input ng-model="user.passwd" readonly value="{{user.passwd}}" class="col-md-10" style="width: 150px" />
+            </div>
+
+            <div>
+                <input class="btn btn-primary mt-4 col-md-10" ng-click="sortUsers('pst', user)" value="Save">
+                <input class="btn btn-primary mt-4 col-md-10" ng-click="sortUsers('cncl', user)" value="Cancel">
+                <input class="btn btn-primary mt-4 col-md-10" ng-click="sortUsers('grdbk', user.idx, user.passwd)" value="Add Gradebook">
+            </div>
+        </div>
+
+        <div ng-show="grdDetail">
+            <div>===============================================================</div>
+            <div>
+                <h2>Create Gradebook entry for {{itemId}}</h2>
+            </div>
+
+            <div class="dropdown col-md-5">
+                <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    Choose Subject
+                </button>
+                <ul class="dropdown-menu" style="font-size: larger">
+                    <li><a href="#" ng-click="crsName('0')">Historical Context of the Bible</a></li>
+                    <li><a href="#" ng-click="crsName('1')">Philosophy and History of Christian Thought</a></li>
+                    <li><a href="#" ng-click="crsName('2')">Introduction to Romans</a></li>
+                    <li><a href="#" ng-click="crsName('3')">History of the Christian Church</a></li>
+                    <li><a href="#" ng-click="crsName('4')">Introduction to the book of Revelation</a></li>
+                    <li><a href="#" ng-click="crsName('5')">Introduction to the Gospel of Mark</a></li>
+                    <li><a href="#" ng-click="crsName('6')">The Life of David</a></li>
+                    <li><a href="#" ng-click="crsName('7')">Presbyterians and the American Revolution</a></li>
+                </ul>
+            </div>
+
+
+            <div class="mt-4">
+                <label style="font-weight: bold" class="col-md-2">Course: </label>
+                <input ng-model="itemCourse" value="{{itemCourse}}" class="col-md-10" style="width: 150px" />
+            </div>
+
+            <div class="mt-4">
+                <label style="font-weight: bold" class="col-md-2">Teacher Id: </label>
+                <input ng-model="itemTeacherEmail" value="{{itemTeacherEmail}}" class="col-md-10"
+                    style="width: 150px" />
+            </div>
+
+            <div class="mt-4">
+                <label style="font-weight: bold" class="col-md-2">Password: </label>
+                <input ng-model="itemPassword" readonly value="{{itemPassword}}" class="col-md-10" style="width: 150px" />
+            </div>
+
+            <div>
+                <label style="font-weight: bold" class="col-md-2"></label>
+                <input class="btn btn-primary mt-4 col-md-10" ng-click="createGradebook(itemCourse, itemTeacherEmail, itemPassword, itemId)" value="Save">
+                <input class="btn btn-primary mt-4 col-md-10" ng-click="sortGradebook('cncl', item)" value="Cancel">
+                <br /><br />
+            </div>
+        </div>
+    </div>
+</div>

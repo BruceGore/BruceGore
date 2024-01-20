@@ -1,0 +1,353 @@
+@inject SignInManager<ApplicationUser> signInManager;
+
+@model mvccore.Models.Commentary
+
+@{
+    ViewData["Title"] = "Analysis";
+}
+
+<div class="container">
+
+
+    <div ng-controller="drop" data-ng-init="init_analysis('@ViewBag.rtn', '@ViewBag.rf')">
+        <div class="row">
+            <div class="col-sm-4 col-md-4 col-lg-4">
+                <img src="~/images/Bruce12.jpg" class="img-fluid" />
+            </div>
+
+            <div class="col-sm-8 col-md-8 col-lg-8">
+                <h1>@ViewData["Title"]</h1>
+                <h3>This page offers a comprehensive analytical approach to the entire Bible.
+                    To find biblical statements (verses) on various topics, or to see an outline
+                    of the entire Bible, with related texts, use the dropdown menus below.
+                    All scripture texts use the NKJV.
+                </h3>
+            </div>
+        </div>
+
+
+        <div class="row mt-3">
+            <div class="table col-md-12">
+                <table>
+
+                    <tr>
+                        <td style="width: 300px">
+                            <div>
+                                <h2>Biblical Themes: {{choice1}}</h2>
+                                <div class="dropdown">
+                                    <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                        Choose Testament
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#" ng-click="analysis('0')">Old Testament</a></li>
+                                        <li><a href="#" ng-click="analysis('1')">New Testament</a></li>
+                                        <li><a href="#" ng-click="analysis('5')">Bible Outlines</a></li>
+                                    </ul>
+                                </div>
+                                <div class="mt-2 dropdown mt-3" ng-show="newTest">
+                                    <select ng-model="item1" class="btn-primary drop"
+                                        ng-options="c.heading for c in head1" ng-change="analysis('2')">
+                                        <option value="">--Choose Major Theme--</option>
+                                    </select>
+                                </div>
+                                <div class="mt-2 dropdown mt-3" ng-show="newTest2">
+                                    <select ng-model="item2" class="btn-primary drop"
+                                        ng-options="c.heading2 for c in head2" ng-change="analysis('3')">
+                                        <option value="">--Choose Minor Theme--</option>
+                                    </select>
+                                </div>
+                                <div class="mt-2 dropdown mt-3" ng-show="newTest3">
+                                    <select ng-model="item3" class="btn-primary drop"
+                                        ng-options="c.heading3 for c in head3" ng-change="analysis('4')">
+                                        <option value="">--Choose Specific Topic--</option>
+                                    </select>
+                                </div>
+
+                                <div class="row mt-2 dropdown col-md-2 mt-3" ng-show="outline1">
+                                    <select ng-model="item1" class="btn-primary drop"
+                                        ng-options="c.bookName for c in out1" ng-change="analysis('6')">
+                                        <option value="">--Choose Book--</option>
+                                    </select>
+                                </div>
+
+                                <div class="row mt-2 dropdown col-md-2 mt-3" ng-show="outline2">
+                                    <select ng-model="item2" class="btn-primary drop"
+                                        ng-options="c.heading1 for c in out2" ng-change="analysis('7')">
+                                        <option value="">--Choose Major Section--</option>
+                                    </select>
+                                </div>
+
+                                <div class="row mt-2 dropdown col-md-2 mt-3" ng-show="outline3">
+                                    <select ng-model="item3" class="btn-primary drop"
+                                        ng-options="c.heading2 for c in out3" ng-change="analysis('8')">
+                                        <option value="">--Choose sub Section--</option>
+                                    </select>
+                                </div>
+
+                                <div class="row mt-2 dropdown col-md-2 mt-3" ng-show="outline4">
+                                    <select ng-model="item4" class="btn-primary drop"
+                                        ng-options="c.heading3 for c in out4" ng-change="analysis('9')">
+                                        <option value="">--Choose item--</option>
+                                    </select>
+                                </div>
+
+                                <div class="row mt-2 dropdown col-md-2 mt-3" ng-show="outline5">
+                                    <select ng-model="item5" class="btn-primary drop"
+                                        ng-options="c.heading4 for c in out5" ng-change="analysis('10')">
+                                        <option value="">--Choose text--</option>
+                                    </select>
+                                </div>
+
+                            </div>
+                        </td>
+                        <td style="width: 600px">
+                            @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                            {
+                                <div>
+
+                                    <div class="mt-4">
+                                        <input ng-click="editHeadings('01')" style="width: 100px" ng-show="editOptions"
+                                        class="btn btn-primary mt-4" value="Edit Headings">
+                                        <input ng-click="editEntries('01')" style="width: 100px" ng-show="editOptions"
+                                        class="btn btn-primary mt-4 ml-2" value="Assign Verses">
+                                        <input ng-click="editEntries('02')" style="width: 100px" ng-show="editOptions"
+                                        class="btn btn-primary mt-4 ml-2" value="Edit Verses">
+                                        <input ng-click="editEntries('03')" style="width: 100px" ng-show="edOt"
+                                        class="btn btn-primary mt-4 ml-2" value="Edit Outline">
+                                    </div>
+
+
+                                    <div ng-show="edtHdg" class="mt-4">
+                                        <input ng-click="editHeadings('02')" style="width: 100px"
+                                        class="btn btn-primary mt-4" value="Add Heading1">
+                                        <input ng-click="editHeadings('03')" style="width: 100px"
+                                        class="btn btn-primary mt-4" value="Edit Heading">
+                                        <input ng-click="editHeadings('04')" style="width: 100px"
+                                        class="btn btn-primary mt-4" value="Delete Heading">
+                                        <input ng-click="editHeadings('05')" style="width: 100px"
+                                        class="btn btn-primary mt-4" value="Cancel1">
+                                    </div>
+
+                                    <input type="text" class="mt-5 ml-4" placeholder="Enter new heading here" ng-show="nwhd"
+                                    style="width: 250px; height: 25px" ng-model="newHeading" />
+
+                                    <input ng-click="editHeadings('06')" style="width: 100px; height: 25px"
+                                    class="btn btn-primary ml-4" ng-show="nwhd" value="Add Heading2">
+
+                                    <input ng-click="editHeadings('07')" style="width: 100px; height: 25px"
+                                    class="btn btn-primary ml-4" ng-show="nwhd" value="Cancel2">
+
+                                    <div ng-show="edhd">
+
+                                        <input type="text" class="mt-5 ml-4" style="width: 250px; height: 25px"
+                                        ng-model="edHeading" />
+
+                                        <input ng-click="editHeadings('08')" style="width: 100px; height: 25px"
+                                        class="btn btn-primary ml-4" value="Submit Heading">
+
+                                        <input ng-click="editHeadings('09')" style="width: 100px; height: 25px"
+                                        class="btn btn-primary ml-4" value="Cancel3">
+
+                                    </div>
+
+
+
+
+                                    <div class="col-md-12 mt-5" ng-show="edtEnt">
+                                        <label for="verse" ng-show="shwVrs">
+                                            <h2>Enter verse: </h2>
+                                        </label>
+                                        <input type="text" ng-show="shwVrs" class="ml-3" ng-model="verse" id="verse"
+                                        name="verse" size="8">
+                                        <input ng-click="GetVerse('00')" ng-show="shwVrs0" style="width: 60px"
+                                        class="btn btn-primary ml-3" value="Submit1">
+
+                                        <input ng-click="GetVerse('01')" ng-show="shwVrs1" style="width: 60px"
+                                        class="btn btn-primary ml-3" value="Submit2">
+
+
+
+                                        <input ng-click="AddVerse('01')" style="width: 45px" ng-show="advs"
+                                        class="btn btn-primary ml-2" value="Add1">
+                                        <input ng-click="AddVerse('02')" style="width: 55px" ng-show="advs"
+                                        class="btn btn-primary ml-2" value="Remove">
+                                        <input ng-click="AddVerse('03')" style="width: 45px" ng-show="advs1"
+                                        class="btn btn-primary ml-2" value="Edit2">
+                                        <input ng-click="AddVerse('04')" style="width: 70px" ng-show="advs4"
+                                        class="btn btn-primary ml-2" value="Comment1">
+                                        <input ng-click="AddVerse('07')" style="width: 70px" ng-show="advs5"
+                                        class="btn btn-primary ml-2" value="Comment2">
+                                        <input ng-click="AddVerse('05')" style="width: 60px" ng-show="advs3"
+                                        class="btn btn-primary ml-2" value="Analysis">
+                                        <input ng-click="AddVerse('06')" style="width: 70px" ng-show="advs2"
+                                        class="btn btn-primary ml-2" value="Cancel4">
+                                    </div>
+
+
+                                    <div class="col-md-12 mt-3 row" ng-show="edtEnt">
+
+                                        <div ng-show="resVs">
+                                            <h3>{{vrsRef}}: {{vrse.text}}</h3>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 mt-3 row" ng-show="edtEnt">
+
+
+                                        <div ng-show="editVs">
+                                            <textarea name="message" ng-model="newText" rows="5" cols="60"></textarea>
+                                            <br />
+                                            <input ng-click="saveEdit()" style="width: 50px"
+                                            class="btn btn-primary mt-4 ml-2" value="Save1">
+                                            <input ng-click="cancelEdit()" style="width: 70px" class="btn btn-primary mt-4"
+                                            value="Cancel5">
+                                        </div>
+
+                                        <form ng-show="editComment1" asp-controller="home" asp-action="EditComment1"
+                                        method="post">
+                                            <textarea name="comment" ng-model="newComment" rows="13" cols="60"></textarea>
+                                            <br />
+                                            <input ng-click="cancelComment()" style="width: 70px"
+                                            class="btn btn-primary mt-1" value="Cancel6">
+                                            <input type="submit" style="width: 50px" class="btn btn-primary mt-1 ml-2"
+                                            value="Save2">
+                                            <input style="width: 100px" class="mt-4 ml-3" readonly ng-model="ref"
+                                            asp-for="Reference" />
+                                            <input style="width: 100px" readonly ng-model="id_temp" asp-for="Id" />
+                                        </form>
+
+                                        <form ng-show="editComment2" asp-controller="home" asp-action="EditComment2"
+                                        method="post">
+                                            <textarea name="comment" ng-model="newComment" rows="13" cols="60"></textarea>
+                                            <br />
+                                            <input ng-click="cancelComment()" style="width: 70px"
+                                            class="btn btn-primary mt-1" value="Cancel7">
+                                            <input type="submit" style="width: 50px" class="btn btn-primary mt-1 ml-2"
+                                            value="Save3">
+                                            <input style="width: 100px" class="mt-4 ml-3" readonly ng-model="ref"
+                                            asp-for="Reference" />
+                                            <input style="width: 100px" readonly ng-model="id_temp" asp-for="Id" />
+                                        </form>
+
+
+                                        <div ng-show="vsAnalysis" class="mt-3 col-md-12" ng-repeat="vs in vsAna">
+                                            <div class="row">
+                                                <span>{{vs.txt3}} /</span>
+                                                <span> {{vs.txt2}} /</span>
+                                                <span> {{vs.txt1}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 mt-5 row">
+                                        <input ng-click="AddTmp('01')" style="width: 100px" ng-show="edtOutline1"
+                                        class="btn btn-primary ml-2" value="Edit Item1">
+
+                                        <input ng-click="AddTmp('02')" style="width: 100px" ng-show="edtOutline2"
+                                        class="btn btn-primary ml-2" value="Add Item2">
+
+                                        <input ng-click="AddTmp('03')" style="width: 100px" ng-show="edtOutline3"
+                                        class="btn btn-danger ml-2" value="Delete Item3">
+
+
+                                        <input ng-click="AddTmp('04')" style="width: 100px" ng-show="edtOutline4"
+                                        class="btn btn-primary ml-2" value="Edit Item4">
+
+                                        <input ng-click="AddTmp('05')" style="width: 100px" ng-show="edtOutline5"
+                                        class="btn btn-primary ml-2" value="Add Item5">
+
+                                        <input ng-click="AddTmp('06')" style="width: 100px" ng-show="edtOutline6"
+                                        class="btn btn-danger ml-2" value="Delete Item6">
+
+
+                                        <label for="hdng" ng-show="shwHdng">
+                                            <h2>Edit Heading: </h2>
+                                        </label>
+                                        <input type="text" ng-show="shwHdng" class="ml-2" ng-model="txtHdng" id="hdng"
+                                        name="hdng" size="40">
+                                        <input ng-click="edtHdng('01')" ng-show="shwHdng1" style="width: 60px"
+                                        class="btn btn-primary mt-3 offset-3" value="Save4">
+                                        <input ng-click="edtHdng('03')" ng-show="shwHdng1" style="width: 60px"
+                                        class="btn btn-primary mt-3 ml-3" value="Cancel8">
+
+                                        <input ng-click="edtHdng('02')" ng-show="shwHdng2" style="width: 60px"
+                                        class="btn btn-primary mt-3 offset-3" value="Save6">
+                                        <input ng-click="edtHdng('03')" ng-show="shwHdng2" style="width: 60px"
+                                        class="btn btn-primary mt-3 ml-3" value="Cancel10">
+
+                                        <label for="addHdng" ng-show="addHdng">
+                                            <h2>Add Heading: </h2>
+                                        </label>
+                                        <input type="text" ng-show="addHdng" class="ml-2" ng-model="txtAddHdng" id="addHdng"
+                                        name="addHdng" size="40">
+
+                                        <input ng-click="edtHdng('04')" ng-show="addHdng1" style="width: 60px"
+                                        class="btn btn-primary mt-3 offset-3" value="Save5">
+
+                                        <input ng-click="edtHdng('05')" ng-show="addHdng1" style="width: 60px"
+                                        class="btn btn-primary mt-3 ml-3" value="Delete4">
+
+                                        <input ng-click="edtHdng('06')" ng-show="addHdng1" style="width: 60px"
+                                        class="btn btn-primary mt-3 ml-3" value="Cancel9">
+
+
+                                        <input ng-click="edtHdng('07')" ng-show="addHdng2" style="width: 60px"
+                                        class="btn btn-primary mt-3 offset-3" value="Save7">
+
+                                        <input ng-click="edtHdng('08')" ng-show="addHdng2" style="width: 60px"
+                                        class="btn btn-primary mt-3 ml-3" value="Delete5">
+
+                                        <input ng-click="edtHdng('09')" ng-show="addHdng3" style="width: 60px"
+                                        class="btn btn-primary mt-3 ml-3" value="Cancel11">
+
+
+
+
+
+
+                                    </div>
+
+                                </div>
+                            }
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+
+        <div>
+
+
+            <div ng-show="newTest4" class="mt-3" ng-repeat="vs in head4">
+                <div class="row">
+                    <span class="col-md-2">{{vs.reference}}</span>
+                    <span class="col-md-5">{{vs.verse}}</span>
+                </div>
+            </div>
+
+            <div ng-show="outline6" class="mt-3" ng-repeat="vs in head5">
+                <div class="row">
+                    <span class="col-md-2">{{vs.bookRef}}</span>
+                    <span class="col-md-5">{{vs.text}}</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!--
+                     <textarea ng-model="ref" asp-for="Reference" rows = "0" cols="20"></textarea>
+                    <div class="mt-4" ng-show=edtEntries>
+                        <label for="verse">
+                            <h2>Enter verse: </h2>
+                        </label>
+                        <input type="text" class="ml-3" ng-model="verse" id="verse" name="verse" size="8">
+                        <input ng-click="GetVerse('01')" style="width: 50px" class="btn btn-primary ml-3" value="Submit">
+                        <input ng-click="GetVerse('02')" style="width: 50px" class="btn btn-primary ml-3" value="Cancel">
+                    </div>
+
+
+-->

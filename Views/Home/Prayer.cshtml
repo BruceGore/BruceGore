@@ -1,0 +1,184 @@
+@inject SignInManager<ApplicationUser> signInManager;
+
+@model mvccore.Models.Commentary
+
+@{
+    ViewData["Title"] = "Analysis";
+}
+
+
+<div class="container">
+    <div ng-controller="drop" data-ng-init="init_pray()">
+        <div class="mt-5">
+            <h2>Prayer: {{choice1}}</h2>
+        </div>
+
+        <div class="row mt-5">
+            <div class="dropdown col-md-3">
+                <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    Which Day
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="#" ng-click="prayer('MON')">Monday</a></li>
+                    <li><a href="#" ng-click="prayer('TUE')">Tuesday</a></li>
+                    <li><a href="#" ng-click="prayer('WED')">Wednesday</a></li>
+                    <li><a href="#" ng-click="prayer('THU')">Thursday</a></li>
+                    <li><a href="#" ng-click="prayer('FRI')">Friday</a></li>
+                    <li><a href="#" ng-click="prayer('ALL')">Every Day</a></li>
+                </ul>
+            </div>
+
+
+            @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+            {
+                <div class="col-md-8">
+                    <div class="row">
+                        <div ng-show="pry_edit" class="btn btn-primary" ng-click="prayer_edit()">Edit</div>
+                        
+                        <div ng-show="pry_inp">
+                            <label for="verse">
+                                <h2>Enter number: </h2>
+                            </label>
+                            <input type="text" class="ml-3" ng-model="verse" id="verse" name="verse" size="6">
+                            <input ng-click="GetPrayer('01')" style="width: 50px" ng-show="advs_submit" class="btn btn-primary ml-3"
+                            value="Submit">
+                        </div>
+
+                        <input ng-click="addPrayer('01')" style="width: 50px; height: 27px" ng-show="advs1" class="btn btn-primary ml-2"
+                        value="Cancel">
+                        <input ng-click="addPrayer('02')" style="width: 45px; height: 27px" ng-show="advs2" class="btn btn-primary ml-2"
+                        value="Save">
+                        <input ng-click="addPrayer('03')" style="width: 55px; height: 27px" ng-show="advs3" class="btn btn-danger ml-2"
+                        value="Delete">
+                        <input ng-click="addPrayer('04')" style="width: 45px; height: 27px" ng-show="advs" class="btn btn-primary ml-2"
+                        value="Edit">
+                        <input ng-click="addPrayer('05')" style="width: 60px; height: 27px" ng-show="advs" class="btn btn-primary ml-2"
+                        value="Comment">
+                        <input ng-click="addPrayer('06')" style="width: 60px; height: 27px" ng-show="advs" class="btn btn-primary ml-2"
+                        value="Analysis">                        
+                    </div>
+
+                    <div ng-show="resVs">                        
+                        <textarea name="message" ng-model="Head2" rows="1" cols="60"></textarea>
+                    </div>
+
+
+
+                    <div ng-show="resVs_tmp" class="mt-3 row">
+                        <div ng-repeat="h in pryEdit">
+                            <input type="text" size="30" value="{{h.heading2}}" />
+                            <!--try setting up a textarea with ng-model for value, see analysis page-->
+                        </div>
+                    </div>
+
+
+                    <br />
+
+                    <div ng-show="editVs">
+                        <textarea name="message" ng-model="newText" rows="5" cols="60"></textarea>
+                        <br />
+                        <input ng-click="cancelEdit()" style="width: 50px" class="btn btn-primary mt-4" value="Cancel">
+                        <input ng-click="saveEdit()" style="width: 50px" class="btn btn-primary mt-4 ml-2" value="Save">
+                    </div>
+
+                    <form ng-show="editComment" asp-controller="home" asp-action="EditComment1" method="post">
+                        <textarea name="comment" ng-model="newComment" rows="13" cols="60"></textarea>
+                        <br />
+                        <input ng-click="cancelComment()" style="width: 50px" class="btn btn-primary mt-4" value="Cancel">
+                        <input type="submit" style="width: 50px" class="btn btn-primary mt-4 ml-2" value="Save">
+                        <input style="width: 50px" ng-model="ref" asp-for="Reference" />
+                        <input style="width: 100px" ng-model="id_temp" asp-for="Id" />
+                    </form>
+
+                    <div ng-show="vsAnalysis" class="mt-3" ng-repeat="vs in vsAna">
+                        <div class="row">
+                            <span class="col-md-3">{{vs.txt3}}</span>
+                            <span class="col-md-4">{{vs.txt2}}</span>
+                            <span class="col-md-4">{{vs.txt1}}</span>
+                        </div>
+                    </div>
+                </div>
+            }
+            </div>
+
+
+        <div ng-show="newTest" class="row mt-3" ng-repeat="vs in head1">
+            <div class="row">{{vs.heading1}}: {{vs.heading2}}</div>
+        </div>
+
+
+
+        <div class="row mt-2 dropdown col-md-2 mt-3" ng-show="newTestxx">
+            <select ng-model="item1" class="btn-primary drop" ng-repeat="c in head1" ng-change="analysis('2')">
+                <option value="">--Choose Major Theme--</option>
+            </select>
+        </div>
+
+        <div class="row mt-2 dropdown col-md-2 mt-3" ng-show="newTest2">
+            <select ng-model="item2" class="btn-primary drop" ng-options="c.heading2 for c in head2"
+                ng-change="analysis('3')">
+                <option value="">--Choose Minor Theme--</option>
+            </select>
+        </div>
+
+        <div class="row mt-2 dropdown col-md-2 mt-3" ng-show="newTest3">
+            <select ng-model="item3" class="btn-primary drop" ng-options="c.heading3 for c in head3"
+                ng-change="analysis('4')">
+                <option value="">--Choose Specific Topic--</option>
+            </select>
+        </div>
+
+        <div ng-show="newTest4" class="mt-3" ng-repeat="vs in head4">
+            <div class="row">
+                <span class="col-md-2">{{vs.reference}}</span>
+                <span class="col-md-5">{{vs.verse}}</span>
+            </div>
+        </div>
+
+        <div class="row mt-2 dropdown col-md-2 mt-3" ng-show="outline1">
+            <select ng-model="item1" class="btn-primary drop" ng-options="c.bookName for c in out1"
+                ng-change="analysis('6')">
+                <option value="">--Choose Book--</option>
+            </select>
+        </div>
+
+        <div class="row mt-2 dropdown col-md-2 mt-3" ng-show="outline2">
+            <select ng-model="item2" class="btn-primary drop" ng-options="c.heading1 for c in out2"
+                ng-change="analysis('7')">
+                <option value="">--Choose Major Section--</option>
+            </select>
+        </div>
+
+        <div class="row mt-2 dropdown col-md-2 mt-3" ng-show="outline3">
+            <select ng-model="item3" class="btn-primary drop" ng-options="c.heading2 for c in out3"
+                ng-change="analysis('8')">
+                <option value="">--Choose sub Section--</option>
+            </select>
+        </div>
+
+        <div class="row mt-2 dropdown col-md-2 mt-3" ng-show="outline4">
+            <select ng-model="item4" class="btn-primary drop" ng-options="c.heading3 for c in out4"
+                ng-change="analysis('9')">
+                <option value="">--Choose item--</option>
+            </select>
+        </div>
+
+        <div class="row mt-2 dropdown col-md-2 mt-3" ng-show="outline5">
+            <select ng-model="item5" class="btn-primary drop" ng-options="c.heading4 for c in out5"
+                ng-change="analysis('10')">
+                <option value="">--Choose text--</option>
+            </select>
+        </div>
+
+        <div ng-show="outline6" class="mt-3" ng-repeat="vs in head5">
+            <div class="row">
+                <span class="col-md-2">{{vs.bookRef}}</span>
+                <span class="col-md-5">{{vs.text}}</span>
+            </div>
+        </div>
+
+
+
+
+    </div>
+</div>

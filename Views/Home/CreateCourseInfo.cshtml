@@ -1,0 +1,69 @@
+@model LessonDescription
+
+<h1>Create Course Info Item</h1>
+
+<div class="mt-4" ng-controller="drop">
+    <form asp-controller="home" asp-action="EditComment3" method="post" class="mt-12">
+
+        <div class="form-group row">
+            <label style="font-weight: bold" asp-for="LsnId" class="col-md-2 col-form-label">Lesson Id</label>
+            <div class="col-md-10">
+                <input style="width: 300px" asp-for="LsnId" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label style="font-weight: bold" asp-for="LsnTitle" class="col-md-2 col-form-label">Lesson Title</label>
+            <div class="col-md-10">
+                <input style="width: 300px" asp-for="LsnTitle" />
+            </div>
+        </div>
+
+
+        <div class="form-group row">
+            <label style="font-weight: bold" asp-for="LsnDesc" class="col-md-2 col-form-label">Lesson Description: </label>
+            <div class="col-md-10">
+                <textarea asp-for="LsnDesc" rows="5" cols="50"></textarea>
+            </div>
+        </div>
+
+
+        <div class="form-group row">
+            <label style="font-weight: bold" asp-for="Course" class="col-md-2 col-form-label">Course</label>
+            <div class="col-md-10">
+                <input style="width: 300px" asp-for="Course" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label style="font-weight: bold" asp-for="Video" class="col-md-2 col-form-label">Video Link</label>
+            <div class="col-md-10">
+                <input style="width: 300px" asp-for="Video" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label style="font-weight: bold" asp-for="WritingAssignment" class="col-md-2 col-form-label">Writing Assignment: </label>
+            <div class="col-md-10">
+                <textarea asp-for="WritingAssignment" rows="5" cols="50"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label style="font-weight: bold" asp-for="Misc" class="col-md-2 col-form-label">Miscellaneous</label>
+            <div class="col-md-10">
+                <input style="width: 300px" asp-for="Misc" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary">Create</button>
+            </div>
+            <button class="btn btn-primary ml-4" type=""
+                ng-click="init_courseMaintain(Course)">Cancel</button>
+        </div>
+
+
+    </form>
+</div>

@@ -1,0 +1,70 @@
+@model WritingAssignment
+
+<h1>Create Writing Assignment Item</h1>
+
+
+<form asp-controller="home" asp-action="EditComment4" method="post" class="mt-12">
+
+
+    <div class="form-group row">
+        <label style="font-weight: bold" asp-for="Email" class="col-md-2 col-form-label">Email</label>
+        <div class="col-md-10">
+            <input style="width: 300px" asp-for="Email" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label style="font-weight: bold" asp-for="UserId" class="col-md-2 col-form-label">User Id</label>
+        <div class="col-md-10">
+            <input style="width: 300px" asp-for="UserId" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label style="font-weight: bold" asp-for="CourseCode" class="col-md-2 col-form-label">Course Code</label>
+        <div class="col-md-10">
+            <input style="width: 300px" asp-for="CourseCode" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label style="font-weight: bold" asp-for="Question" class="col-md-2 col-form-label">Question</label>
+        <div class="col-md-10">
+            <input style="width: 300px" asp-for="Question" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label style="font-weight: bold" asp-for="Answer" class="col-md-2 col-form-label">Answer</label>
+        <div class="col-md-10">
+            <textarea asp-for="Answer" rows="5" cols="50"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label style="font-weight: bold" asp-for="Critique" class="col-md-2 col-form-label">Critique</label>
+        <div class="col-md-10">
+            <textarea asp-for="Critique" rows="5" cols="50"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label style="font-weight: bold" asp-for="Score" class="col-md-2 col-form-label">Score</label>
+        <div class="col-md-10">
+            <input style="width: 300px" asp-for="Score" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label style="font-weight: bold" asp-for="AddCritique" class="col-md-2 col-form-label">Add Critique</label>
+        <div class="col-md-10">
+            <textarea asp-for="AddCritique" rows="5" cols="50"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-10">
+            <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+    </div>
+</form>

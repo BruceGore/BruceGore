@@ -1,0 +1,14 @@
+
+
+
+<h1>Commandments Page</h1>
+
+<div class="container">
+    <div ng-controller="drop" data-ng-init="init_command()">
+        <div class="row">
+            <div ng-repeat="cm in cmd">
+                <h2>{{cm.number}}: {{cm.text}} ({{cm.day}})</h2>
+            </div>
+        </div>
+    </div>
+</div>

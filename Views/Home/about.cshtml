@@ -1,0 +1,108 @@
+@model IEnumerable<mvccore.Models.AudioLectures>
+
+@{
+    ViewData["Title"] = "About";
+}
+<h1>@ViewData["Title"]</h1>
+
+<h2>List Audio Lectures</h2>
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-1 col-md-1 col-lg-1">
+            <div><h2>ID</h2></div>
+        </div>
+        <div class="col-sm-2 col-md-2 col-lg-2">
+            <div><h2>Class</h2></div>
+        </div>
+        <div class="col-sm-2 col-md-2 col-lg-2">
+            <div><h2>Topic</h2></div>
+        </div>
+        <div class="col-sm-1 col-md-1 col-lg-1">
+            <div><h2>Title</h2></div>
+        </div>
+
+
+    </div>
+
+    @foreach (var lecture in Model)
+    {
+        <div class="row mt-2 striped-rows">
+            <div class="col-sm-1 col-md-1 col-lg-1">@lecture.ID</div>
+            <div class="col-sm-2 col-md-2 col-lg-2">@lecture.Class</div>
+            <div class="col-sm-2 col-md-2 col-lg-2">@lecture.Topic</div>
+            <div class="col-sm-3 col-md-3 col-lg-3">@lecture.Title</div>
+
+            <a asp-controller="home" asp-action="EditLecture" style="height: 25px" asp-route-id="@lecture.ID"
+            class="btn btn-primary m-1">Edit</a>
+
+            <a asp-controller="home" asp-action="detail1" style="height: 25px" asp-route-id="@lecture.ID"
+            class="btn btn-danger m-1">Delete</a>
+            
+        </div>
+
+            <!--
+
+
+            <span id="confirmDeleteSpan_@lecture.ID" style="display: none">
+                <span>Are you sure you want to delete?</span>
+                <a asp-controller="home" asp-action="Delete" style="height: 25px" asp-route-id="@lecture.ID"
+                class="btn btn-danger m-1">Yes</a>
+                <a href="#" class="btn btn-primary" onclick="confirmDelete('@lecture.ID', false)">No</a>
+            </span>
+
+
+
+
+            <span id="deleteSpan_@lecture.ID">
+                <a href="#" class="btn btn-danger" onclick="confirmDelete('@lecture.ID', true)">Delete</a>
+            </span>
+
+                
+
+                <div class="col-sm-3 col-md-4 col-lg-4">@lecture.VideoLink</div>
+                            <img class="card-img-top" src="~/images/Bruce12.jpg" />
+                            <div class="card-footer text-center">
+
+                                <a  asp-controller="home" asp-action="detail1" asp-route-id="@lecture.ID" 
+                                    class="btn btn-primary m-1">View</a>
+                                <a href="#" class="btn btn-primary m-1">Edit</a>
+                                <a href="#" class="btn btn-danger m-1">Delete</a>
+                            </div>
+        -->
+
+
+
+    }
+
+</div>
+
+<!--
+
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th>Class</th>
+                <th>Topic</th>
+                <th>Title</th>
+                <th>Book</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var lecture in Model)
+            {
+                <tr>
+                    <td>@lecture.ID</td>
+                    <td>@lecture.ID</td>
+                    <td>@lecture.ID</td>
+                    <td>@lecture.ID</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+-->

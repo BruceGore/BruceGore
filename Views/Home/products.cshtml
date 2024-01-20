@@ -1,0 +1,124 @@
+@{
+    ViewData["Title"] = "Products";
+}
+<h1>@ViewData["Title"]</h1>
+
+<div class="container">
+    <div class="row">
+        <h1><span style="font-style: italic">Available from Amazon - Historical Context of the Bible: </span></h1>
+    </div>
+
+    <div ng-controller="drop" data-ng-init="init()">
+
+        <div class="row">
+            <div class="col-md-6" style="font-weight: bolder; font-style: italic">
+                Anyone interested in the historical background of the Bible will
+                find this an invaluable reference. Beginning with ancient
+                Mesopotamia, this richly illustrated text traces the great
+                civilizations of the ancient world through to the time of the
+                Roman Empire. Loaded with maps, charts, pictures, and
+                illustrations, this fully indexed volume provides helpful
+                information both to the newcomer to biblical studies, as well
+                as experienced pastors and Bible teachers.
+
+                <br /><br />
+
+                <div ng-show="ppt">
+                    <h2>{{ppt_Label}}</h2>
+                    <br />
+
+                    <div ng-show="menu_back">
+                        <a href="#" ng-click="menuBack()">Back</a>
+                        <br /><br />
+                    </div>
+
+                    <div ng-show="ppt1">
+                        <a href="#" ng-click="PowerPoints('1')">Apocalyse in Space and Time</a>
+                        <br /><br />
+                    </div>
+
+                    <div ng-show="ppt2">
+                        <a href="#" ng-click="PowerPoints('2')">Historical Context of the Bible</a>
+                        <br /><br />
+                    </div>
+
+                    <div ng-show="ppt3">
+                        <a href="#" ng-click="PowerPoints('3')">History of the Christian Church</a>
+                        <br /><br />
+                    </div>
+
+                    <div ng-show="ppt4">
+                        <a href="#" ng-click="PowerPoints('4')">The Gospel According to Mark</a>
+                        <br /><br />
+                    </div>
+
+                    <div ng-show="ppt5">
+                        <a href="#" ng-click="PowerPoints('5')">David: A Man After God's Own Heart</a>
+                        <br /><br />
+                    </div>
+
+                    <div ng-show="ppt_back">
+                        <a href="#" ng-click="pptBack()">Back</a>
+                        <br /><br />
+                    </div>
+                    
+                    <div ng-show="dsply_ppts" ng-repeat="vs in vsTest">
+                        <a href="{{vs.lastName}}">{{vs.firstName}}</a>
+                    </div>
+                </div>
+
+                <div ng-show="vdeo">
+                    <div ng-show="menu_back">
+                        <h2>{{video_label}}</h2>
+                        <br />
+                        <a href="#" ng-click="menuBack()">Back</a>
+                        <br /><br />
+                    </div>
+
+                    <div>
+                        <a href="#" ng-click="PowerPoints('6')">Apocalyse in Space and Time</a>
+                        <br /><br />
+                    </div>
+
+                    <div ng-show="dsply_ppts" ng-repeat="vs in vsTest">
+                        <a href="{{vs.lastName}}" download>{{vs.firstName}}</a>
+                    </div>
+
+                </div>
+
+
+
+
+
+                <a href="#" ng-show="frwd" ng-click="Forward()">Read Forward by G. Tyler Fischer</a>
+                <br /><br />
+                <div ng-show="contents">
+                    <a href="~/Text/TableContents.pdf">Read Table of Contents</a>
+                    <br /><br />
+                    <a href="~/Text/Book05.pdf">Read a Sample Chapter</a>
+                    <br /><br />
+                    <a
+                        href="https://www.amazon.com/Historical-Chronological-Context-Bible-Bruce/dp/1426943598/ref=sr_1_1?s=books&ie=UTF8&qid=1320507295&sr=1-1">Order
+                        today from Amazon!</a>
+                    <br /><br />
+                    <a href="~/Text/Handouts.zip">Aids for Homeschoolers</a>
+                    <br /><br />
+                    <a href="#" ng-click="PowerPoints('0')">PowerPoints files from Lectures</a>
+                    <br /><br />
+                    <a href="#" ng-click="VideoFiles('0')">Download video lectures</a>
+                </div>
+                <div ng-show="forwd">
+                    <textarea ng-model="forward" readonly style="border: none" rows="10" cols="50"></textarea>
+                    <br /><br />
+                    <button class="btn btn-primary" ng-click="clsForward()">Close</button>
+                </div>
+            </div>
+
+            <div class="col-sm-4 col-md-4 col-lg-4">
+                <img src="~/images/Cover.jpg" class="img-fluid" />
+            </div>
+        </div>
+
+    </div>
+
+</div>

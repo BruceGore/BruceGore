@@ -1,0 +1,101 @@
+@model mvccore.Models.WritingAssignment
+
+<div class="container">
+    <h1>Writing Assignment Maintenance</h1>
+    <div class="mt-4" ng-controller="drop" data-ng-init="init_writingMaintain('0')">
+
+        <div class="table table-responsive col-md-12 mt-4" ng-show="display">
+            <table>
+                <tr>
+                    <th>Id</th>
+                    <th  ng-click="init_writingMaintain('1')" style="color:blue; cursor: pointer">
+                        Email
+                    </th>
+                    
+                    <th ng-click="init_writingMaintain('2')" style="color:blue; cursor: pointer">
+                        UserId
+                    </th>
+
+                    <th>CourseCode</th>
+                    <th>Score</th>
+                    <th>
+                        <a class="btn btn-primary col-md-10" asp-controller="Home" asp-action="CreateWritingAssignment">
+                            Create Writing Assignment
+                        </a>
+                    </th>
+                </tr>
+                <tr ng-repeat="item in writings">
+                    <td ng-click="WritingDetail(item.idx)" style="color:blue; cursor: pointer">
+                        {{item.idx}}</td>
+                    <td>{{item.email}}</td>
+                    <td>{{item.userid}}</td>
+                    <td>{{item.coursecode}}</td>
+                    <td>{{item.score}}</td>
+                </tr>
+            </table>
+        </div>
+
+        <form enctype="multipart/form-data" asp-controller="home" asp-action="EditComment4" method="post">
+            <div ng-show="writingDetail" ng-repeat="item in writings">
+                <div>===================================================================</div>
+
+                <h2 asp-for="Id">Edit Entry with Id: {{item.idx}}</h2>
+                <input hidden ng-model="item.idx" asp-for="Id" />
+
+                <div>
+                    <label style="font-weight: bold" class="col-md-2 mt-4">Email: </label>
+                    <input ng-model="item.email" value="{{item.email}}"
+                        asp-for="Email" class="col-md-10 mt-4" style="width: 300px" />
+                </div>
+
+                <div>
+                    <label style="font-weight: bold" class="col-md-2 mt-4">User Id: </label>
+                    <input ng-model="item.userid" value="{{item.userid}}" 
+                        asp-for="UserId" class="col-md-10 mt-4" style="width: 300px" />
+                </div>
+
+                <div>
+                    <label style="font-weight: bold" class="col-md-2 mt-4">Lesson Code: </label>
+                    <input ng-model="item.coursecode" value="{{item.coursecode}}" class="col-md-10 mt-4"
+                        asp-for="CourseCode" style="width: 300px" />
+                </div>
+
+                <div>
+                    <label style="font-weight: bold" class="col-md-2 mt-4">Question: </label>
+                    <textarea ng-model="item.question" class="mt-4" asp-for="Question" rows="3" cols="50"></textarea>
+                </div>
+
+
+                <div>
+                    <label style="font-weight: bold" class="col-md-2 mt-4">Answer: </label>
+                    <textarea ng-model="item.answer" class="mt-4" asp-for="Answer" rows="5" cols="50"></textarea>
+                </div>
+
+                <div>
+                    <label style="font-weight: bold" class="col-md-2 mt-4">Inline Critique: </label>
+                    <textarea ng-model="item.critique" class="mt-4" asp-for="Critique" rows="5" cols="50"></textarea>
+                </div>
+
+                <div>
+                    <label style="font-weight: bold" class="col-md-2 mt-4">Score: </label>
+                    <input ng-model="item.score" value="{{item.score}}" class="col-md-10 mt-4" 
+                    asp-for="Score" style="width: 300px" />
+                </div>
+
+                <div>
+                    <label style="font-weight: bold" class="col-md-2 mt-4">Additional Critique: </label>
+                    <textarea ng-model="item.addCritique" class="mt-4" asp-for="AddCritique" rows="5" cols="50"></textarea>
+                </div>
+
+                <label style="font-weight: bold" class="col-md-2"></label>
+                <input ng-click="init_writingMaintain('0')" style="width: 70px"
+                    class="col-md-2 btn btn-primary mt-2" value="Cancel">
+                <input type="submit" style="width: 50px" class="col-md-2 btn btn-primary mt-2" value="Save">
+
+            </div>
+        </form>
+        <br /><br />
+
+
+    </div>
+</div>

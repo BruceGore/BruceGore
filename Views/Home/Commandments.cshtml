@@ -1,0 +1,36 @@
+@model IEnumerable<mvccore.Models.Commandments>
+
+@{
+ViewData["Title"] = "Commandments";
+}
+<h1>@ViewData["Title"]</h1>
+
+<h2>List Commandments</h2>
+
+<div>
+	<table>
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Number</th>
+				<th>Text</th>
+			</tr>
+		</thead>
+
+<!--
+		<tbody>
+			foreach (var commandment in Model)
+			{
+				<tr>
+					<td>commandment.ID</td>
+					<td>commandment.Number</td>
+					<td>commandment.Text</td>					
+				</tr>
+			}
+		</tbody>
+-->
+
+	</table>
+</div>
+
+

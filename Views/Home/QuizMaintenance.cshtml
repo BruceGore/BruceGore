@@ -1,0 +1,108 @@
+@model mvccore.Models.QuizTable
+
+
+
+<div class="container">
+    <h1>Quiz Maintenance</h1>
+    <div class="mt-4" ng-controller="drop" data-ng-init="init_quizzes('@ViewBag.course', '@ViewBag.unit', '@ViewBag.lesson')">
+        <div class="row">
+            <div class="dropdown col-md-3">
+                <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    Choose Subject
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="#" ng-click="init_quizzes('context')">Context of the Bible</a></li>
+                    <li><a href="#" ng-click="init_quizzes('2')">Philosophy 1</a></li>
+                    <li><a href="#" ng-click="init_quizzes('3')">Philosophy 2</a></li>
+                    <li><a href="#" ng-click="init_quizzes('4')">Church History</a></li>
+                    <li><a href="#" ng-click="init_quizzes('5')">Greek</a></li>
+                    <li><a href="#" ng-click="init_quizzes('6')">Easy Greek</a></li>
+                    <li><a href="#" ng-click="init_quizzes('all')">Exceptions</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-12" ng-show="ch1">
+            <div class="row mt-4">
+                <h3>{{choice1}}: </h3>
+            
+                <label class="ml-4" style="font-weight: bold"><h3>Unit: </h3></label>
+                <input ng-model="quizUnit" class="ml-4" style="width: 30px; height: 20px" />
+
+                <label class="ml-4" style="font-weight: bold" class="ml-4"><h3>Lesson: </h3></label>
+                <input ng-model="quizLesson" class="ml-4" style="width: 30px; height: 20px" />
+
+                <input ng-click="init_quizzes(choice1)" style="width: 20px"
+                    class="col-md-1 btn btn-primary ml-4" value="Submit">
+
+            </div>
+        </div>
+
+
+
+        <div class="table table-responsive col-md-12 mt-4" ng-show="display">
+            <table>
+                <tr>
+                    <th>Id</th>
+                    <th>Course</th>
+                    <th>Reference</th>
+                    <th>Question</th>
+                    <th>Answer</th>
+                    <th>
+
+                        <a class="btn btn-primary" asp-controller="Home" asp-action="CreateQuizItem">
+                            Create Quiz Item
+                        </a>
+                    </th>
+                </tr>
+                <tr ng-repeat="item in quizItems">
+                    <td ng-click="QuizDetail(item.id)" style="color:blue; cursor: pointer">
+                        {{item.id}}</td>
+                    <td>{{item.course}}</td>
+                    <td>{{item.qzRef}}</td>
+                    <td>{{item.qzQst}}</td>
+                    <td>{{item.qzAns}}</td>
+                </tr>
+            </table>
+        </div>
+
+        <form enctype="multipart/form-data" asp-controller="home" asp-action="EditQuizzes" method="post">
+            <div ng-show="QuizDetl" ng-repeat="item in quizItems">
+                <div>===================================================================</div>
+
+                <h2 asp-for="Id">Edit Entry with Id: {{item.id}}</h2>
+                <input hidden ng-model="item.id" asp-for="Id" />
+
+                 <div>
+                    <label style="font-weight: bold" class="col-md-2 mt-4">Course: </label>
+                    <input ng-model="item.course" value="{{item.course}}" 
+                        asp-for="Course" class="col-md-10" style="width: 300px" />
+                </div>
+
+                <div>
+                    <label style="font-weight: bold" class="col-md-2 mt-4">Reference: </label>
+                    <input ng-model="item.qzRef" value="{{item.qzRef}}" 
+                        asp-for="QzRef" class="col-md-10" style="width: 300px" />
+                </div>
+
+                <div>
+                    <label style="font-weight: bold" class="col-md-2 mt-4">Question: </label>
+                    <input ng-model="item.qzQst" value="{{item.qzQst}}" class="col-md-10"
+                        asp-for="QzQst" style="width: 300px" />
+                </div>
+
+                <div>
+                    <label style="font-weight: bold" class="col-md-2 mt-4">Answer: </label>
+                    <input ng-model="item.qzAns" value="{{item.qzAns}}" class="col-md-10" 
+                    asp-for="QzAns" style="width: 300px" />
+                </div>
+
+                <label style="font-weight: bold" class="col-md-2"></label>
+                <input ng-click="init_quizzes(choice1)" style="width: 70px"
+                    class="col-md-2 btn btn-primary mt-2" value="Cancel">
+                <input type="submit" style="width: 50px" class="col-md-2 btn btn-primary mt-2" value="Save">
+
+            </div>
+        </form>
+    </div>
+</div>

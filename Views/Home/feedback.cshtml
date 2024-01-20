@@ -1,0 +1,123 @@
+@inject SignInManager<ApplicationUser> signInManager;
+
+@model mvccore.ViewModels.LoginViewModel
+
+@{
+    ViewData["Title"] = "Feedback";
+}
+
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="container">
+    <div ng-controller="drop" data-ng-init="init_feed('@User.Identity.Name', 'Feedback')">
+        <div class="row">
+            <div class="col-sm-3 col-md-3 col-lg-3">
+                <img src="~/images/Bruce12.jpg" class="img-fluid" />
+                <br /><br />
+            </div>
+
+            @if (signInManager.IsSignedIn(User))
+            {
+                <div class="col-sm-7 col-md-7 col-lg-7">
+                    <h3> Hi {{name}}, nice to have you here at
+                        the feedback page. If you would like to leave
+                        a comment or ask a question, please click the
+                        'leave comment' button below. If you would like
+                        to see only your previous comments, which
+                        includes 'private' comments, please click 'see history'
+                        below.
+                    </h3>
+                    <br />
+
+                    <button ng-show="lv_cmt" class="btn btn-primary" ng-click="cmt_panel(1, '@User.Identity.Name')">
+                        Leave Comment
+                    </button>
+
+                    <button ng-show="lv_cmt" class="btn btn-primary" ng-click="cmt_panel(3, '@User.Identity.Name')">
+                        See History
+                    </button>
+
+                    @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                    {
+                        <button ng-show="lv_cmt" class="btn btn-primary" ng-click="cmt_panel(5, '@User.Identity.Name')">
+                            Admin History
+                        </button>
+                    }
+
+                        <div ng-show="cmt_pan">
+                        <h3>Please leave your comment or question in the space below,
+                            and then indicate if you want this to be a 'public comment'
+                            by clicking the checkbox if you do. Public comments can be
+                            seen by anyone viewing this page. Leave the box not checked 
+                            if you do not want your comment or question to be visible
+                            to anyone except Bruce.
+                        </h3>
+                        <br />
+                        <textarea ng-model="cmt_pn" rows="10" cols="50"></textarea>
+
+                        <input class="form-check-input ml-1" ng-model="pub_chk" type="checkbox" />
+                        <label class="form-check-label ml-5">
+                            Public
+                        </label>
+
+                        <br /><br />
+                        <button class="btn btn-primary" ng-click="cmt_panel(2, '@User.Identity.Name')">Add Comment</button>
+                        <button class="btn btn-primary" ng-click="cmt_panel(4, '@User.Identity.Name')">Cancel</button>                        
+                    </div>
+                </div>
+
+
+
+
+            }
+            else
+            {
+                <div class="col-sm-8 col-md-8 col-lg-8">
+                    <h3>Thank you for taking the time to visit this site! I
+                        appreciate your interest.</h3>
+
+                    <h3 class="mt-3"> If you are interested in
+                        providing feedback, offering comments, or asking
+                        questions, I would be happy to hear from you! To do
+                        so, please register (or login if you are already
+                        registered) using the link in the upper right of
+                        this page. Then return to this page to post your
+                        comment</h3>
+
+                    <h3 class="mt-3">Your information will be kept confidential,
+                        and will not be provided to any third party under any
+                        circumstances. If appropriate, I will respond to questions
+                        as soon as practical.</h3>
+                </div>
+            }
+
+        </div>
+
+        <div class="form-group">
+            <input type="hidden" value="feedback" asp-for="ReturnUrl" />
+        </div>
+
+        <h3>=======Comments by Users - Starting with most recent=======</h3>
+
+
+        @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+        {
+            <div ng-repeat="fd in fdBack">
+                <h2 class="row mt-4">{{fd.email}}, {{fd.first}} {{fd.last}}, {{fd.city}} {{fd.state}}, {{fd.country}},
+                    {{fd.pub}}</h2>                    
+                <h3 class="row">{{fd.comment}}</h3>
+            </div>
+        }
+        else
+        {
+            <div ng-repeat="fd in fdBack">
+                <h3 class=" row mt-4">{{fd.first}}, {{fd.city}}, {{fd.country}}</h3>                
+                <h3 class="row">{{fd.comment}}</h3>
+            </div>
+        }
+
+    </div>
+
+
+</div>

@@ -1,0 +1,94 @@
+
+
+<div class="container">
+    <h1>Students</h1>
+    <div class="mt-4" ng-controller="drop" data-ng-init="init_students()">
+        <div class="table table-responsive col-md-12">
+            <table>
+                <tr>
+                    <th>Id</th>
+                    <th ng-click="sortStudents('id')" style="color:blue; cursor: pointer">UserID</th>
+                    <th ng-click="sortStudents('name')" style="color:blue; cursor: pointer; width: 175px">Name</th>
+                    <th style="width: 175px">Address</th>
+                    <th style="width: 75px">Password</th>
+                    <th ng-click="sortStudents('email')" style="color:blue; cursor: pointer; width: 175px">Email</th>
+                </tr>
+
+                <tr ng-repeat="student in students">
+                    <td ng-click="sortStudents('dtl', student.idx)" style="cursor: pointer">{{student.idx}}</td>
+                    <td ng-click="sortStudents('Id', student.userID)" style="cursor: pointer">{{student.userID}}</td>
+                    <td ng-click="sortStudents('Id', student.name)" 
+                        style="cursor: pointer">{{student.last}}, {{student.first}} {{student.middle}}</td>
+                    <td ng-click="sortStudents('Id', student.address)"
+                        style="cursor: pointer">{{student.add1}}, {{student.add2}} {{student.city}},
+                        {{student.state}} {{student.country}} {{student.post}}</td>
+                    <td ng-click="sortStudents('Id', student.passwd)" style="cursor: pointer">{{student.passwd}}</td>
+                    <td ng-click="sortStudents('Id', student.email)" style="cursor: pointer">{{student.email}}</td>
+                </tr>
+            </table>
+        </div>
+
+        <div ng-show="stuPersonal" ng-repeat="student in students">
+            <div>===============================================================</div>
+            
+
+            <div class="mt-4">
+                <label style="font-weight: bold" class="col-md-2">First Name: </label>
+                <input ng-model="student.first" value="{{student.first}}" class="col-md-10" style="width: 150px"/>
+            </div>
+
+            <div class="mt-4">
+                <label style="font-weight: bold" class="col-md-2">Last Name: </label>
+                <input ng-model="student.last" value="{{student.last}}" class="col-md-10" style="width: 150px"/>
+            </div>
+
+            <div class="mt-4">
+                <label style="font-weight: bold" class="col-md-2">Address: </label>
+                <input ng-model="student.add1" value="{{student.add1}}" class="col-md-10" style="width: 150px"/>
+            </div>
+
+            <div class="mt-4">
+                <label style="font-weight: bold" class="col-md-2">Address2: </label>
+                <input ng-model="student.add2" value="{{student.add2}}" class="col-md-10" style="width: 150px"/>
+            </div>
+
+            <div class="mt-4">
+                <label style="font-weight: bold" class="col-md-2">City: </label>
+                <input ng-model="student.city" value="{{student.city}}" class="col-md-10" style="width: 150px"/>
+            </div>
+
+            <div class="mt-4">
+                <label style="font-weight: bold" class="col-md-2">State or Province: </label>
+                <input ng-model="student.state" value="{{student.state}}" class="col-md-10" style="width: 150px"/>
+            </div>
+
+            <div class="mt-4">
+                <label style="font-weight: bold" class="col-md-2">Country: </label>
+                <input ng-model="student.country" value="{{student.country}}" class="col-md-10" style="width: 150px"/>
+            </div>
+
+            <div class="mt-4">
+                <label style="font-weight: bold" class="col-md-2">Postal Code: </label>
+                <input ng-model="student.post" value="{{student.post}}" class="col-md-10" style="width: 150px"/>
+            </div>
+
+            <div class="mt-4">
+                <label style="font-weight: bold" class="col-md-2">Password: </label>
+                <input ng-model="student.passwd" value="{{student.passwd}}" class="col-md-10" style="width: 150px"/>
+            </div>
+
+            <div class="mt-4">
+                <label style="font-weight: bold" class="col-md-2">Email: </label>
+                <input ng-model="student.email" value="{{student.email}}" class="col-md-10" style="width: 150px"/>
+            </div>
+
+            <div>
+                <input class="btn btn-primary mt-4 col-md-10" ng-click="sortStudents('pst', student)" value="Save">
+                <input class="btn btn-primary mt-4 col-md-10" ng-click="sortStudents('cncl', student)" value="Cancel">
+                <input class="btn btn-danger mt-4 col-md-10" ng-click="sortStudents('del', student)" value="Delete">
+            </div>
+
+
+        </div>
+    </div>
+</div>

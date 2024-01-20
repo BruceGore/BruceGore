@@ -1,0 +1,20 @@
+<div class="container" style="background-color: #e1db9c">
+    <div ng-controller="drop" data-ng-init="init_PayPal('@ViewBag.code')">
+
+
+        <h1 class="text-center" style="font-style: italic; font-weight: bolder">Bruce W. Gore Online School of Christian
+            Studies</h1>
+
+
+        <p style="font-size: 30px">@ViewBag.msg</p>
+
+
+        <btn class="btn btn-primary" ng-show="clk1" 
+            onclick="window.location.href='https:www.brucegore.com';">Close</btn>
+
+        <btn class="btn btn-primary" ng-show="clk2" 
+            onclick="window.location.href='https:www.brucegore.com/bwg/AcademicPaid.aspx?code=1';">Close</btn>
+
+
+    </div>
+</div>

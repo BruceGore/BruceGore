@@ -1,0 +1,275 @@
+@{
+    ViewData["Title"] = "Library";
+}
+
+
+<script>
+
+    function test(){
+        alert("ok");
+    }
+</script>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4 col-md-4 col-lg-4">
+            <img src="~/images/Bruce13.jpg" class="img-fluid" />
+        </div>
+
+        <div class="col-sm-8 col-md-8 col-lg-8">
+            <h1>@ViewData["Title"]</h1>
+            <h3>Here is the complete library of lectures available.
+                Please use the dropdown list on the left to browse
+                around!
+            </h3>
+        </div>
+    </div>
+
+    <div><h2>Subject areas:</h2></div>
+
+    <div ng-controller="drop">
+        <div class="row">
+            <div class="dropdown col-md-2">
+                <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    Choose Subject
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="#" ng-click="newTestament('0')">New Testament</a></li>
+                    <li><a href="#" ng-click="newTestament('1')">Old Testament</a></li>
+                    <li><a href="#" ng-click="newTestament('2')">Theology</a></li>
+                    <li><a href="#" ng-click="newTestament('3')">History</a></li>
+                    <li><a href="#" ng-click="newTestament('4')">Philosophy</a></li>
+                    <li><a href="#" ng-click="newTestament('5')">Recent Lectures</a></li>
+                    <li><a href="#" ng-click="newTestament('6')">Search by Word</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3" ng-show="ch1">
+                <div>
+                    <h2>{{choice1}}</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-2" ng-show="newTest">
+            <div class="dropdown col-md-2">
+                <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    Choose Book
+                </button>
+                <div class="dropdown-menu">
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Matthew')">Matthew</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Mark')">Mark</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Luke')">Luke</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01John')">John</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Acts')">Acts</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Romans')">Romans</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('011 Corinthians')">1 Corinthians</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('012 Corinthians')">2 Corinthians</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Galatians')">Galatians</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Ephesians')">Ephesians</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Philippians')">Philippians</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Colossians')">Colossians</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('011 Thessalonians')">1
+                        Thessalonians</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('012 Thessalonians')">2
+                        Thessalonians</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('011 Timothy')">1 Timothy</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('012 Timothy')">2 Timothy</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Titus')">Titus</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Philemon')">Philemon</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Hebrews')">Hebrews</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01James')">James</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('011 Peter')">1 Peter</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('012 Peter')">2 Peter</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('011 John')">1 John</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('012 John')">2 John</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('013 John')">3 John</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Jude')">Jude</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Revelation')">Revelation</button>
+                </div>
+            </div>
+            <div class="col-md-3" ng-show="ch2">
+                <h2>{{choice2}}</h2>
+            </div>
+        </div>
+
+
+        <div class="row mt-2" ng-show="oldTest">
+            <div class="dropdown col-sm-2 col-md-2 col-lg-2">
+                <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    Choose book
+                </button>
+                <div class="dropdown-menu">
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Genesis')">Genesis</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Exodus')">Exodus</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Leviticus')">Leviticus</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Numbers')">Numbers</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Deuteronomy')">Deuteronomy</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Joshua')">Joshua</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Judges')">Judges</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Ruth')">Ruth</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('011 Samuel')">1 Samuel</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('012 Samuel')">2 Samuel</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('011 Kings')">1 Kings</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('012 Kings')">2 Kings</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('011 Chronicles')">1 Chronicles</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('012 Chronicles')">2 Chronicles</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Ezra')">Ezra</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Nehemiah')">Nehemiah</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Esther')">Esther</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Job')">Job</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Psalms')">Psalms</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Proverbs')">Proverbs</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Ecclesiastes')">Ecclesiastes</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Song of Solomon')">Song of Solomon</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Isaiah')">Isaiah</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Jeremiah')">Jeremiah</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Lamentations')">Lamentations</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Ezekiel')">Ezekiel</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Daniel')">Daniel</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Hosea')">Hosea</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Joel')">Joel</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Amos')">Amos</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Obadiah')">Obadiah</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Jonah')">Jonah</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Micah')">Micah</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Nahum')">Nahum</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Habakkuk')">Habakkuk</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Zephaniah')">Zephaniah</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Haggai')">Haggai</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Zechariah')">Zechariah</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('01Malachi')">Malachi</button>
+                </div>
+            </div>
+            <div class="col-md-3" ng-show="ch2">
+                <h2>{{choice2}}</h2>
+            </div>
+        </div>
+
+        <div class="row mt-2" ng-show="theology">
+            <div class="dropdown col-sm-2 col-md-2 col-lg-2">
+                <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    Choose theme
+                </button>
+                <div class="dropdown-menu">
+                    <button class="dropdown-item" type="button" ng-click="newTestament('02Theology')">Theology Proper</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('02Christology')">Christology</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('02Pneumatology')">Pneumatology</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('02Anthropology')">Anthropology</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('02Soteriology')">Soteriology</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('02Ecclesiology')">Ecclesiology</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('02Eschatology')">Eschatology</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('02Ethics')">Ethics</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('02Cults')">Cults</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('02Science')">Science</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('02Economics')">Economics</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('02Bible')">Bible</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('02Legal Theory')">Legal Theory</button>
+                </div>
+            </div>
+            <div class="col-md-3" ng-show="ch2">
+                <h2>{{choice2}}</h2>
+            </div>
+        </div>
+
+
+        <div class="row mt-2" ng-show="history">
+            <div class="dropdown col-sm-2 col-md-2 col-lg-2">
+                <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    Choose theme
+                </button>
+                <div class="dropdown-menu">
+                    <button class="dropdown-item" type="button" ng-click="newTestament('03Biblical')">Biblical History</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('03Ancient')">Ancient History</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('03Medieval')">Medieval History</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('03Pre-Reformation')">Pre-Reformation History</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('03Modern')">Modern History</button>
+                </div>
+            </div>
+            <div class="col-md-3" ng-show="ch2">
+                <h2>{{choice2}}</h2>
+            </div>
+        </div>
+
+        <div class="row mt-2" ng-show="philosophy">
+            <div class="dropdown col-sm-2 col-md-2 col-lg-2">
+                <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    Choose theme
+                </button>
+                <div class="dropdown-menu">                    
+                    <button class="dropdown-item" type="button" ng-click="newTestament('04Ancient')">Ancient Philosophy</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('04Early Christian')">Early Christian Philosophy</button>                    
+                    <button class="dropdown-item" type="button" ng-click="newTestament('04Middle Ages')">Philosophy of the Middle Ages</button>
+                    <button class="dropdown-item" type="button" ng-click="newTestament('04Modern')">Modern Philosophy</button>                    
+                </div>
+            </div>
+            <div class="col-md-3" ng-show="ch2">
+                <h2>{{choice2}}</h2>
+            </div>
+        </div>
+
+        <div class="row mt-2" ng-show="search">
+            <div class="dropdown col-sm-2 col-md-4 col-lg-6">
+                <h3>Enter search word (partial words ok, e.g., 'lut' for 'Luther')</h3>
+            </div>
+
+            <input ng-model="srch_term" type="text" style="font-size: larger; height: 35px" placeholder="search word" />
+            <button class="btn btn-primary" style="height: 35px" ng-click="newTestament('7')">submit</button>
+
+
+
+
+        </div>
+
+
+
+        <div ng-show="null_entry"><h2>Sorry. There are presently no entries for {{choice2}}.</h2></div>
+        
+        <div class="row mt-3" ng-show="reslt">
+            <div class="table table-responsive col-md-12">
+                <table>
+                    <tr>
+                        <th>Title</th>
+                        <th>Book</th>                        
+                        <th>Date</th>
+                        <th>Description</th>
+                        <th>Play Options</th>
+                        <th></th>
+                    </tr>
+
+                    <tr ng-repeat="lecture in lectures">
+                        <td style="width: 240px;">{{lecture.title}}</td>
+                        <td><span ng-show="lecture.book != null">{{lecture.book}}</span>
+
+
+                            <span ng-show="lecture.chapter != 0">{{lecture.chapter}}</span>
+                            <span ng-show="lecture.verse != 0">:</span>
+                            <span ng-show="lecture.verse != 0">{{lecture.verse}}</span></td>
+                        <td>{{lecture.date | date}}</td>
+                        <td style="width: 300px;">{{lecture.comment}} ({{lecture.id}})</td>
+                        <td>
+                            <a class="btn btn-primary" href="{{lecture.hyperlink}}">Audio</a>
+                        </td>
+                        <td>
+                            <button class="btn btn-primary" ng-show="lecture.videoLink != null"
+                                ng-click="playVid(lecture.videoLink);">Video</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div ng-show="info">
+            <div class="lead">{{comnt}}</div>
+            <div>{{comnt}}</div><br /><br /><br />
+            <button class="btn btn-primary pull-left btn-space" ng-show="vidBtn" ng-click="playVid(link)">Video</button>
+            <button class="btn btn-primary pull-left btn-space" ng-show="togButOn" id="togBut" ng-click="playAud(audio)">Audio</button>
+        </div>
+
+        <div ng-show="audioPlayer">
+            <div class="lead">{{title}}</div>
+            <a class="lead" href="{{audio}}">Click here to play audio</a>
+        </div>
+
+    </div>
+</div>
+    
